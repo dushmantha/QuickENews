@@ -1,6 +1,5 @@
 import React from 'react';
-import {Image, Dimensions} from 'react-native';
-import {BorderlessButton} from 'react-native-gesture-handler';
+import {Image, Dimensions, TouchableOpacity, StatusBar} from 'react-native';
 import {Box, Text, useTheme} from '../components/Theme';
 import {Button} from '../components';
 import {AuthNavigationProps} from '../components/Navigation';
@@ -17,6 +16,7 @@ const Welcome = ({navigation}: AuthNavigationProps<'Welcome'>) => {
   const theme = useTheme();
   return (
     <Box flex={1} backgroundColor="background">
+      <StatusBar hidden={true} />
       <Box
         flex={1}
         borderBottomRightRadius="xl"
@@ -53,7 +53,6 @@ const Welcome = ({navigation}: AuthNavigationProps<'Welcome'>) => {
             Login to your account below or signup for an amazing experience
           </Text>
           <Button
-            variant="primary"
             label="Have an account? Login"
             onPress={() => navigation.navigate('Login')}
           />
@@ -61,12 +60,12 @@ const Welcome = ({navigation}: AuthNavigationProps<'Welcome'>) => {
             label="Join us, it’s Free"
             onPress={() => navigation.navigate('SignUp')}
           />
-          <BorderlessButton
+          <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}>
-            <Text variant="button" color="secondary">
+            <Text variant="button" color="background2">
               Forgot password?
             </Text>
-          </BorderlessButton>
+          </TouchableOpacity>
         </Box>
       </Box>
     </Box>

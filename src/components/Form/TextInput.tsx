@@ -20,7 +20,7 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
   ({icon, touched, error, ...props}, ref) => {
     const theme = useTheme();
     const SIZE = theme.borderRadii.m * 2.5;
-    const validationColor = error ? 'danger' : 'primary';
+    const validationColor = error ? 'danger' : 'background2';
     const color = !touched ? 'text' : validationColor;
     return (
       <Box
@@ -28,9 +28,9 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
         height={48}
         alignItems="center"
         borderRadius="s"
-        borderWidth={StyleSheet.hairlineWidth}
+        borderWidth={0.5}
         borderColor={color}
-        padding="s">
+        paddingEnd="s">
         <Box padding="s">
           <Text {...{color}}>
             <Icon name={icon} size={16} />
@@ -48,7 +48,7 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
           <RoundedIcon
             name={!error ? 'check' : 'x'}
             size={SIZE}
-            backgroundColor={!error ? 'primary' : 'danger'}
+            backgroundColor={!error ? 'background2' : 'danger'}
             color="background"
           />
         )}

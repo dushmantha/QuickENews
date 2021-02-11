@@ -100,11 +100,7 @@ const SignUp = ({navigation}: AuthNavigationProps<'SignUp'>) => {
           />
         </Box>
         <Box alignItems="center" marginTop="m">
-          <Button
-            variant="primary"
-            onPress={handleSubmit}
-            label="Create your account"
-          />
+          <Button onPress={handleSubmit} label="Create your account" />
         </Box>
       </Box>
     </Container>

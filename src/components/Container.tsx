@@ -2,7 +2,6 @@ import React, {ReactNode} from 'react';
 import {Dimensions, Platform} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Constants from 'expo-constants';
 
 import {Box} from './Theme';
 
@@ -21,15 +20,14 @@ const Container = ({children, footer}: ContainerProps) => {
   return (
     <KeyboardAwareScrollView scrollEnabled={false}>
       <Box
-        height={
-          wHeight + (Platform.OS === 'android' ? Constants.statusBarHeight : 0)
-        }
+        height={wHeight + (Platform.OS === 'android' ? 0 : 0)}
         backgroundColor="background2">
         <Box backgroundColor="background2">
           <Box
             borderBottomLeftRadius="xl"
             overflow="hidden"
-            height={height * 0.61}></Box>
+            height={height * 0.41}
+          />
         </Box>
         <Box flex={1} overflow="hidden">
           <Box
@@ -41,7 +39,11 @@ const Container = ({children, footer}: ContainerProps) => {
             {children}
           </Box>
         </Box>
-        <Box backgroundColor="background2" paddingTop="m">
+        <Box
+          flexWrap="wrap"
+          backgroundColor="background2"
+          paddingVertical="m"
+          alignSelf="center">
           {footer}
           <Box height={insets.bottom} />
         </Box>

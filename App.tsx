@@ -25,10 +25,10 @@ const App = () => {
       <LoadAssets>
         <SafeAreaProvider>
           <AppStack.Navigator headerMode="none">
-            {/* <AppStack.Screen
+            <AppStack.Screen
               name="Authentication"
               component={AuthenticationNavigator}
-            /> */}
+            />
             <AppStack.Screen name="News" component={ContentRoutes} />
           </AppStack.Navigator>
         </SafeAreaProvider>

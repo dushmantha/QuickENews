@@ -1,5 +1,5 @@
 import React from 'react';
-import {BorderlessButton} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native';
 import {Box, Text} from '../../components';
 
 import SocialLogin from './SocialLogin';
@@ -15,12 +15,12 @@ const Footer = ({onPress, title, action}: FooterProps) => {
     <>
       <SocialLogin />
       <Box alignItems="center" marginTop="m">
-        <BorderlessButton {...{onPress}}>
+        <TouchableOpacity {...{onPress}}>
           <Text variant="button" color="background">
-            <Text>{`${title} `}</Text>
-            <Text color="primary">{action}</Text>
+            <Text color="lightGray">{`${title} `}</Text>
+            <Text color="white">{action}</Text>
           </Text>
-        </BorderlessButton>
+        </TouchableOpacity>
       </Box>
     </>
   );

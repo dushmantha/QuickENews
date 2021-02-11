@@ -1,5 +1,5 @@
-import React, {RefObject} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {withTimingTransition, useValue} from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Feather';
@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
 
 interface HeaderProps {
   y: Animated.Value<number>;
-  tab: TabModel;
+  tabModel: TabModel;
   goBack: () => void;
 }
 
-export default ({y, tab, goBack}: HeaderProps) => {
+export default ({y, tabModel, goBack}: HeaderProps) => {
   const theme = useTheme();
   const toggle = useValue<0 | 1>(0);
   const transition = withTimingTransition(toggle, {duration: 100});
@@ -65,6 +65,7 @@ export default ({y, tab, goBack}: HeaderProps) => {
   return (
     <Animated.View style={[styles.container, {paddingTop}]}>
       <Animated.View
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           ...StyleSheet.absoluteFillObject,
           opacity,
@@ -88,6 +89,7 @@ export default ({y, tab, goBack}: HeaderProps) => {
         <Animated.Text
           style={[
             theme.textVariants.title2,
+            // eslint-disable-next-line react-native/no-inline-styles
             {
               transform: [{translateX}, {translateY}],
               flex: 1,
@@ -98,7 +100,7 @@ export default ({y, tab, goBack}: HeaderProps) => {
         </Animated.Text>
         <Icon name="bookmark" size={ICON_SIZE} color="white" />
       </Box>
-      <TabHeader {...{transition, tab}} />
+      <TabHeader {...{transition, tabModel}} />
     </Animated.View>
   );
 };

@@ -21,7 +21,7 @@ const ArticleDetails = ({
   };
   const scrollView = useRef<Animated.ScrollView>(null);
   const [tabs, setTabs] = useState([].map(() => ({anchor: 0})));
-  const tab: TabModel = {
+  const tabModel: TabModel = {
     anchor: 0,
     name: 'user name',
     profile: '',
@@ -45,7 +45,7 @@ const ArticleDetails = ({
           {...{y}}
         />
       </Animated.ScrollView>
-      <Header {...{y, tab, goBack}} />
+      <Header {...{y, tabModel, goBack}} />
     </View>
   );
 };

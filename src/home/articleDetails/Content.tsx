@@ -168,6 +168,7 @@ const RecommendedNews = () => {
           data={news.articles}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
+          keyExtractor={(_, index) => index.toString()}
         />
       </Box>
     );

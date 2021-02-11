@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   FlatList,
+  StatusBar,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Text, Box, useTheme, Size} from '../../components';
@@ -34,6 +35,7 @@ const BreakingNewsSection = ({navigation}: any) => {
   const renderItem = ({item, index}: any) => {
     return (
       <Box alignItems="center">
+        <StatusBar hidden={true} />
         <TouchableOpacity
           style={{
             flex: 1,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Box} from '../../components';
 import Animated from 'react-native-reanimated';
 import MaskedView from '@react-native-community/masked-view';
@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
 
 interface TabHeaderProps {
   transition: Animated.Node<number>;
-  tab: TabModel;
+  tabModel: TabModel;
 }
 
-export default ({transition, tab}: TabHeaderProps) => {
+export default ({transition, tabModel}: TabHeaderProps) => {
   const opacity = transition;
 
   const style = {
@@ -37,31 +37,20 @@ export default ({transition, tab}: TabHeaderProps) => {
         style={{
           ...StyleSheet.absoluteFillObject,
         }}>
-        <Tabs {...{tab}} />
+        <Tabs {...{tabModel}} />
       </Animated.View>
       <Box>
-        <Animated.View
-          style={[
-            style,
-            Platform.OS === 'android'
-              ? {
-                  backgroundColor: 'transparent',
-                  borderWidth: 1,
-                }
-              : {},
-          ]}
-        />
+        <Animated.View style={[style]} />
       </Box>
-      {Platform.OS === 'ios' && (
-        <MaskedView style={StyleSheet.absoluteFill} maskElement={maskElement}>
-          <Animated.View
-            style={{
-              ...StyleSheet.absoluteFillObject,
-            }}>
-            <Tabs {...{tab}} />
-          </Animated.View>
-        </MaskedView>
-      )}
+
+      <MaskedView style={StyleSheet.absoluteFill} maskElement={maskElement}>
+        <Animated.View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+          }}>
+          <Tabs {...{tabModel}} />
+        </Animated.View>
+      </MaskedView>
     </Animated.View>
   );
 };
