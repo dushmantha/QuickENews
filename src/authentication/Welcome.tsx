@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Dimensions, TouchableOpacity, StatusBar} from 'react-native';
+import {Image, Dimensions, TouchableOpacity} from 'react-native';
 import {Box, Text, useTheme} from '../components/Theme';
 import {Button} from '../components';
 import {AuthNavigationProps} from '../components/Navigation';
@@ -16,7 +16,6 @@ const Welcome = ({navigation}: AuthNavigationProps<'Welcome'>) => {
   const theme = useTheme();
   return (
     <Box flex={1} backgroundColor="background">
-      <StatusBar hidden={true} />
       <Box
         flex={1}
         borderBottomRightRadius="xl"

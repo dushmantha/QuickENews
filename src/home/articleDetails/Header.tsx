@@ -1,10 +1,9 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform, TouchableOpacity} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {withTimingTransition, useValue} from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Feather';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import TabHeader from './TabHeader';
 import {TabModel} from './Content';
@@ -52,7 +51,9 @@ export default ({y, tabModel, goBack}: HeaderProps) => {
     inputRange: [-100, 0, HEADER_IMAGE_HEIGHT],
     outputRange: [
       HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT + 100,
-      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT,
+      HEADER_IMAGE_HEIGHT -
+        MIN_HEADER_HEIGHT +
+        (Platform.OS === 'android' ? 60 : 10),
       0,
     ],
     extrapolateRight: Extrapolate.CLAMP,

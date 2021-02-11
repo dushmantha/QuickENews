@@ -1,6 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Animated from 'react-native-reanimated';
+import {CommonActions} from '@react-navigation/native';
+
 import {onScrollEvent, useValue} from 'react-native-redash';
 import {HomeNavigationProps} from '../../components/Navigation';
 import HeaderImage from './HeaderImage';
