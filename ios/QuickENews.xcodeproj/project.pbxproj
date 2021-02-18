@@ -271,6 +271,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		7F6129792B3547239CAF4CA5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,14 +352,6 @@
 			);
 			path = Fonts;
 			sourceTree = "<group>";
-		};
-		7F6129792B3547239CAF4CA5 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -450,6 +449,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = KWNT724QLH;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -490,35 +490,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBE0A06125CF7D2C00A597EA /* Roboto-Thin.ttf in Resources */,
-				EBE0A01525CF7D2C00A597EA /* AntDesign.ttf in Resources */,
 				EBE0A05525CF7D2C00A597EA /* Roboto-BlackItalic.ttf in Resources */,
-				EBE0A02125CF7D2C00A597EA /* Foundation.ttf in Resources */,
 				EBE0A03925CF7D2C00A597EA /* RobotoCondensed-LightItalic.ttf in Resources */,
 				EBE0A06525CF7D2C00A597EA /* Roboto-Black.ttf in Resources */,
-				EBE09FE925CF7D2C00A597EA /* Octicons.ttf in Resources */,
 				EBE0A04925CF7D2C00A597EA /* Roboto-BoldItalic.ttf in Resources */,
-				EBE0A03D25CF7D2C00A597EA /* EvilIcons.ttf in Resources */,
 				EBE0A00D25CF7D2C00A597EA /* Roboto-Regular.ttf in Resources */,
-				EBE0A02525CF7D2C00A597EA /* Ionicons.ttf in Resources */,
 				EBE0A01925CF7D2C00A597EA /* RobotoCondensed-Italic.ttf in Resources */,
-				EBE09FF925CF7D2C00A597EA /* Entypo.ttf in Resources */,
 				EBE0A01D25CF7D2C00A597EA /* RobotoCondensed-BoldItalic.ttf in Resources */,
 				EBE0A00125CF7D2C00A597EA /* RobotoCondensed-Light.ttf in Resources */,
 				EBE0A01125CF7D2C00A597EA /* Roboto-MediumItalic.ttf in Resources */,
 				EBE0A04125CF7D2C00A597EA /* Roboto-ThinItalic.ttf in Resources */,
 				EBE0A04D25CF7D2C00A597EA /* Roboto-LightItalic.ttf in Resources */,
-				EBE0A02D25CF7D2C00A597EA /* FontAwesome5_Regular.ttf in Resources */,
-				EBE0A05925CF7D2C00A597EA /* SimpleLineIcons.ttf in Resources */,
-				EBE0A03125CF7D2C00A597EA /* FontAwesome.ttf in Resources */,
-				EBE0A00525CF7D2C00A597EA /* FontAwesome5_Brands.ttf in Resources */,
-				EBE0A03525CF7D2C00A597EA /* Zocial.ttf in Resources */,
-				EBE09FE525CF7D2C00A597EA /* Fontisto.ttf in Resources */,
 				EBE09FF525CF7D2C00A597EA /* Roboto-Light.ttf in Resources */,
-				EBE0A00925CF7D2C00A597EA /* MaterialCommunityIcons.ttf in Resources */,
 				EBE09FFD25CF7D2C00A597EA /* RobotoCondensed-Bold.ttf in Resources */,
-				EBE0A02925CF7D2C00A597EA /* FontAwesome5_Solid.ttf in Resources */,
-				EBE0A06925CF7D2C00A597EA /* MaterialIcons.ttf in Resources */,
-				EBE09FF125CF7D2C00A597EA /* Feather.ttf in Resources */,
 				EBE0A05125CF7D2C00A597EA /* Roboto-Italic.ttf in Resources */,
 				EBE0A04525CF7D2C00A597EA /* RobotoCondensed-Regular.ttf in Resources */,
 				EBE0A05D25CF7D2C00A597EA /* Roboto-Bold.ttf in Resources */,
@@ -560,36 +544,20 @@
 				EBE09FEE25CF7D2C00A597EA /* Roboto-Medium.ttf in Resources */,
 				EBE0A03A25CF7D2C00A597EA /* RobotoCondensed-LightItalic.ttf in Resources */,
 				EBE0A04E25CF7D2C00A597EA /* Roboto-LightItalic.ttf in Resources */,
-				EBE0A00A25CF7D2C00A597EA /* MaterialCommunityIcons.ttf in Resources */,
-				EBE0A02E25CF7D2C00A597EA /* FontAwesome5_Regular.ttf in Resources */,
 				EBE0A06625CF7D2C00A597EA /* Roboto-Black.ttf in Resources */,
-				EBE0A02625CF7D2C00A597EA /* Ionicons.ttf in Resources */,
 				EBE0A04225CF7D2C00A597EA /* Roboto-ThinItalic.ttf in Resources */,
 				EBE0A05625CF7D2C00A597EA /* Roboto-BlackItalic.ttf in Resources */,
-				EBE0A01625CF7D2C00A597EA /* AntDesign.ttf in Resources */,
 				EBE0A01225CF7D2C00A597EA /* Roboto-MediumItalic.ttf in Resources */,
-				EBE0A03625CF7D2C00A597EA /* Zocial.ttf in Resources */,
 				EBE0A05225CF7D2C00A597EA /* Roboto-Italic.ttf in Resources */,
 				EBE0A04A25CF7D2C00A597EA /* Roboto-BoldItalic.ttf in Resources */,
 				EBE0A00225CF7D2C00A597EA /* RobotoCondensed-Light.ttf in Resources */,
 				EBE0A05E25CF7D2C00A597EA /* Roboto-Bold.ttf in Resources */,
-				EBE09FFA25CF7D2C00A597EA /* Entypo.ttf in Resources */,
-				EBE0A03225CF7D2C00A597EA /* FontAwesome.ttf in Resources */,
 				EBE0A01E25CF7D2C00A597EA /* RobotoCondensed-BoldItalic.ttf in Resources */,
-				EBE0A02A25CF7D2C00A597EA /* FontAwesome5_Solid.ttf in Resources */,
-				EBE0A03E25CF7D2C00A597EA /* EvilIcons.ttf in Resources */,
 				EBE09FFE25CF7D2C00A597EA /* RobotoCondensed-Bold.ttf in Resources */,
-				EBE09FE625CF7D2C00A597EA /* Fontisto.ttf in Resources */,
 				EBE0A00E25CF7D2C00A597EA /* Roboto-Regular.ttf in Resources */,
 				EBE09FF625CF7D2C00A597EA /* Roboto-Light.ttf in Resources */,
-				EBE09FF225CF7D2C00A597EA /* Feather.ttf in Resources */,
-				EBE09FEA25CF7D2C00A597EA /* Octicons.ttf in Resources */,
-				EBE0A06A25CF7D2C00A597EA /* MaterialIcons.ttf in Resources */,
 				EBE0A06225CF7D2C00A597EA /* Roboto-Thin.ttf in Resources */,
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
-				EBE0A05A25CF7D2C00A597EA /* SimpleLineIcons.ttf in Resources */,
-				EBE0A02225CF7D2C00A597EA /* Foundation.ttf in Resources */,
-				EBE0A00625CF7D2C00A597EA /* FontAwesome5_Brands.ttf in Resources */,
 				EBE0A04625CF7D2C00A597EA /* RobotoCondensed-Regular.ttf in Resources */,
 				EBE0A01A25CF7D2C00A597EA /* RobotoCondensed-Italic.ttf in Resources */,
 			);
@@ -600,35 +568,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBE0A06325CF7D2C00A597EA /* Roboto-Thin.ttf in Resources */,
-				EBE0A01725CF7D2C00A597EA /* AntDesign.ttf in Resources */,
 				EBE0A05725CF7D2C00A597EA /* Roboto-BlackItalic.ttf in Resources */,
-				EBE0A02325CF7D2C00A597EA /* Foundation.ttf in Resources */,
 				EBE0A03B25CF7D2C00A597EA /* RobotoCondensed-LightItalic.ttf in Resources */,
 				EBE0A06725CF7D2C00A597EA /* Roboto-Black.ttf in Resources */,
-				EBE09FEB25CF7D2C00A597EA /* Octicons.ttf in Resources */,
 				EBE0A04B25CF7D2C00A597EA /* Roboto-BoldItalic.ttf in Resources */,
-				EBE0A03F25CF7D2C00A597EA /* EvilIcons.ttf in Resources */,
 				EBE0A00F25CF7D2C00A597EA /* Roboto-Regular.ttf in Resources */,
-				EBE0A02725CF7D2C00A597EA /* Ionicons.ttf in Resources */,
 				EBE0A01B25CF7D2C00A597EA /* RobotoCondensed-Italic.ttf in Resources */,
-				EBE09FFB25CF7D2C00A597EA /* Entypo.ttf in Resources */,
 				EBE0A01F25CF7D2C00A597EA /* RobotoCondensed-BoldItalic.ttf in Resources */,
 				EBE0A00325CF7D2C00A597EA /* RobotoCondensed-Light.ttf in Resources */,
 				EBE0A01325CF7D2C00A597EA /* Roboto-MediumItalic.ttf in Resources */,
 				EBE0A04325CF7D2C00A597EA /* Roboto-ThinItalic.ttf in Resources */,
 				EBE0A04F25CF7D2C00A597EA /* Roboto-LightItalic.ttf in Resources */,
-				EBE0A02F25CF7D2C00A597EA /* FontAwesome5_Regular.ttf in Resources */,
-				EBE0A05B25CF7D2C00A597EA /* SimpleLineIcons.ttf in Resources */,
-				EBE0A03325CF7D2C00A597EA /* FontAwesome.ttf in Resources */,
-				EBE0A00725CF7D2C00A597EA /* FontAwesome5_Brands.ttf in Resources */,
-				EBE0A03725CF7D2C00A597EA /* Zocial.ttf in Resources */,
-				EBE09FE725CF7D2C00A597EA /* Fontisto.ttf in Resources */,
 				EBE09FF725CF7D2C00A597EA /* Roboto-Light.ttf in Resources */,
-				EBE0A00B25CF7D2C00A597EA /* MaterialCommunityIcons.ttf in Resources */,
 				EBE09FFF25CF7D2C00A597EA /* RobotoCondensed-Bold.ttf in Resources */,
-				EBE0A02B25CF7D2C00A597EA /* FontAwesome5_Solid.ttf in Resources */,
-				EBE0A06B25CF7D2C00A597EA /* MaterialIcons.ttf in Resources */,
-				EBE09FF325CF7D2C00A597EA /* Feather.ttf in Resources */,
 				EBE0A05325CF7D2C00A597EA /* Roboto-Italic.ttf in Resources */,
 				EBE0A04725CF7D2C00A597EA /* RobotoCondensed-Regular.ttf in Resources */,
 				EBE0A05F25CF7D2C00A597EA /* Roboto-Bold.ttf in Resources */,
@@ -996,6 +948,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KWNT724QLH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = QuickENews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1019,6 +972,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KWNT724QLH;
 				INFOPLIST_FILE = QuickENews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
