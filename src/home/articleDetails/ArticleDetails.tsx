@@ -1,6 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Animated from 'react-native-reanimated';
+import {CommonActions} from '@react-navigation/native';
+
 import {onScrollEvent, useValue} from 'react-native-redash';
 import {HomeNavigationProps} from '../../components/Navigation';
 import HeaderImage from './HeaderImage';
@@ -21,7 +23,7 @@ const ArticleDetails = ({
   };
   const scrollView = useRef<Animated.ScrollView>(null);
   const [tabs, setTabs] = useState([].map(() => ({anchor: 0})));
-  const tab: TabModel = {
+  const tabModel: TabModel = {
     anchor: 0,
     name: 'user name',
     profile: '',
@@ -45,7 +47,7 @@ const ArticleDetails = ({
           {...{y}}
         />
       </Animated.ScrollView>
-      <Header {...{y, tab, goBack}} />
+      <Header {...{y, tabModel, goBack}} />
     </View>
   );
 };

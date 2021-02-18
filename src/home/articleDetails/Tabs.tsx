@@ -1,16 +1,16 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Box} from '../../components';
 import Tab from './Tab';
 import {TabModel} from './Content';
 
 interface TabsProps {
-  tab: TabModel;
+  tabModel: TabModel;
   active?: boolean;
 }
 
-export default ({tab}: TabsProps) => (
+export default ({tabModel}: TabsProps) => (
   <Box style={{...StyleSheet.absoluteFillObject}} flexDirection="row">
-    <Tab {...tab} />
+    <Tab {...tabModel} />
   </Box>
 );

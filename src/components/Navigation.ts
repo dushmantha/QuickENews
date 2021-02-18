@@ -21,7 +21,6 @@ export type AppRoutes = {
 };
 
 export type AuthenticationRoutes = {
-  Onboarding: undefined;
   Welcome: undefined;
   Login: undefined;
   SignUp: undefined;

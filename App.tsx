@@ -11,7 +11,6 @@
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
-
 import {AuthenticationNavigator} from './src/authentication';
 import {LoadAssets} from './src/components';
 import {ThemeProvider} from './src/components/Theme';

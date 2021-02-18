@@ -8,6 +8,7 @@ target 'QuickENews' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+
   target 'QuickENewsTests' do
     inherit! :complete
     # Pods for testing

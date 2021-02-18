@@ -5,6 +5,8 @@ import {
   Image,
   ScrollView,
   FlatList,
+  StatusBar,
+  Platform,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Text, Box, useTheme, Size} from '../../components';
@@ -214,7 +216,17 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: theme.colors.background2}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        paddingTop: Size.paddings.l,
+        backgroundColor: theme.colors.background2,
+      }}>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
       <Box flex={1}>
         <Box height={70}>
           <NavigationBar title="QuickENews" image={Images.notification} />

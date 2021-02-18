@@ -1,8 +1,7 @@
 import React, {useRef} from 'react';
-import {TextInput as RNTextInput} from 'react-native';
+import {TextInput as RNTextInput, TouchableOpacity} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import {BorderlessButton} from 'react-native-gesture-handler';
 import {CommonActions} from '@react-navigation/native';
 
 import {Container, Button, Text, Box} from '../components';
@@ -97,19 +96,15 @@ const Login = ({navigation}: AuthNavigationProps<'Login'>) => {
             checked={values.remember}
             onChange={() => setFieldValue('remember', !values.remember)}
           />
-          <BorderlessButton
+          <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}>
-            <Text variant="button" color="primary">
+            <Text variant="button" color="background2">
               Forgot password
             </Text>
-          </BorderlessButton>
+          </TouchableOpacity>
         </Box>
         <Box alignItems="center" marginTop="m">
-          <Button
-            variant="primary"
-            onPress={handleSubmit}
-            label="Log into your account"
-          />
+          <Button onPress={handleSubmit} label="Log into your account" />
         </Box>
       </Box>
     </Container>

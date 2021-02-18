@@ -36,8 +36,8 @@ export default ({y}: ContentProps) => {
   const theme = useTheme();
   const opacity = interpolateNode(y, {
     inputRange: [
-      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT - 100,
-      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT + 60,
+      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT,
+      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT + 170,
     ],
     outputRange: [1, 0],
     extrapolate: Extrapolate.CLAMP,
@@ -168,6 +168,7 @@ const RecommendedNews = () => {
           data={news.articles}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
+          keyExtractor={(_, index) => index.toString()}
         />
       </Box>
     );

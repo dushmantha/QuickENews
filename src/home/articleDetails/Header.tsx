@@ -1,10 +1,9 @@
-import React, {RefObject} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, Platform, TouchableOpacity} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {withTimingTransition, useValue} from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Feather';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import TabHeader from './TabHeader';
 import {TabModel} from './Content';
@@ -33,11 +32,11 @@ const styles = StyleSheet.create({
 
 interface HeaderProps {
   y: Animated.Value<number>;
-  tab: TabModel;
+  tabModel: TabModel;
   goBack: () => void;
 }
 
-export default ({y, tab, goBack}: HeaderProps) => {
+export default ({y, tabModel, goBack}: HeaderProps) => {
   const theme = useTheme();
   const toggle = useValue<0 | 1>(0);
   const transition = withTimingTransition(toggle, {duration: 100});
@@ -52,7 +51,9 @@ export default ({y, tab, goBack}: HeaderProps) => {
     inputRange: [-100, 0, HEADER_IMAGE_HEIGHT],
     outputRange: [
       HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT + 100,
-      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT,
+      HEADER_IMAGE_HEIGHT -
+        MIN_HEADER_HEIGHT +
+        (Platform.OS === 'android' ? 60 : 10),
       0,
     ],
     extrapolateRight: Extrapolate.CLAMP,
@@ -65,6 +66,7 @@ export default ({y, tab, goBack}: HeaderProps) => {
   return (
     <Animated.View style={[styles.container, {paddingTop}]}>
       <Animated.View
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           ...StyleSheet.absoluteFillObject,
           opacity,
@@ -88,6 +90,7 @@ export default ({y, tab, goBack}: HeaderProps) => {
         <Animated.Text
           style={[
             theme.textVariants.title2,
+            // eslint-disable-next-line react-native/no-inline-styles
             {
               transform: [{translateX}, {translateY}],
               flex: 1,
@@ -98,7 +101,7 @@ export default ({y, tab, goBack}: HeaderProps) => {
         </Animated.Text>
         <Icon name="bookmark" size={ICON_SIZE} color="white" />
       </Box>
-      <TabHeader {...{transition, tab}} />
+      <TabHeader {...{transition, tabModel}} />
     </Animated.View>
   );
 };
