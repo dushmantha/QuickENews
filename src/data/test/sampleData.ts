@@ -51,6 +51,22 @@ const businessArticle = {
       publishedAt: '2021-02-07T23:56:56Z',
       content: null,
     },
+    {
+      source: {
+        id: null,
+        name: 'Substack.com',
+      },
+      author: 'Albert Azout',
+      title: 'Graph theory, graph convolutional networks, knowledge graphs',
+      description:
+        'Graph theory, graph convolutional networks, knowledge graphs',
+      url: 'https://albertazout.substack.com/p/gradient-ascent-10',
+      urlToImage:
+        'https://cdn.substack.com/image/fetch/w_1200,c_limit,f_jpg,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fb1025bac-613a-4f9f-9402-fba9b07d1ba7_3210x1672.png',
+      publishedAt: '2021-02-07T21:37:58Z',
+      content:
+        'Welcome to the 10th edition of Gradient Ascent. Im Albert Azout, a prior entrepreneur and current investor. On a regular basis I encounter interesting scientific research, startups tackling important… [+4887 chars]',
+    },
   ],
 };
 
@@ -107,6 +123,22 @@ const politicsArticle = {
       content:
         'Nothing was special about Monday, January 11, at Signal Advance, a small publicly listed medical device manufacturer in Texas. The company did not have a medical breakthrough to promote, or a lucrati… [+6006 chars]',
     },
+    {
+      source: {
+        id: null,
+        name: 'Substack.com',
+      },
+      author: 'Albert Azout',
+      title: 'Graph theory, graph convolutional networks, knowledge graphs',
+      description:
+        'Graph theory, graph convolutional networks, knowledge graphs',
+      url: 'https://albertazout.substack.com/p/gradient-ascent-10',
+      urlToImage:
+        'https://cdn.substack.com/image/fetch/w_1200,c_limit,f_jpg,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fb1025bac-613a-4f9f-9402-fba9b07d1ba7_3210x1672.png',
+      publishedAt: '2021-02-07T21:37:58Z',
+      content:
+        'Welcome to the 10th edition of Gradient Ascent. Im Albert Azout, a prior entrepreneur and current investor. On a regular basis I encounter interesting scientific research, startups tackling important… [+4887 chars]',
+    },
   ],
 };
 
@@ -161,6 +193,22 @@ const scienceAndTechArticle = {
         'https://www.nydailynews.com/resizer/FSPGGn5URXiB9s73dfMwbg6mpHY=/1200x0/top/cloudfront-us-east-1.images.arcpublishing.com/tronc/JTKET6WWMRBVHEEYYORHCWJITI.jpg',
       publishedAt: '2021-02-07T22:30:51Z',
       content: null,
+    },
+    {
+      source: {
+        id: null,
+        name: 'Substack.com',
+      },
+      author: 'Albert Azout',
+      title: 'Graph theory, graph convolutional networks, knowledge graphs',
+      description:
+        'Graph theory, graph convolutional networks, knowledge graphs',
+      url: 'https://albertazout.substack.com/p/gradient-ascent-10',
+      urlToImage:
+        'https://cdn.substack.com/image/fetch/w_1200,c_limit,f_jpg,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fb1025bac-613a-4f9f-9402-fba9b07d1ba7_3210x1672.png',
+      publishedAt: '2021-02-07T21:37:58Z',
+      content:
+        'Welcome to the 10th edition of Gradient Ascent. Im Albert Azout, a prior entrepreneur and current investor. On a regular basis I encounter interesting scientific research, startups tackling important… [+4887 chars]',
     },
   ],
 };
@@ -222,6 +270,38 @@ const entertainment = {
 
 const breakingNews = {
   articles: [
+    {
+      source: {
+        id: null,
+        name: 'Motley Fool Australia',
+      },
+      author: 'Tony Yoo',
+      title: 'Should short selling be banned?',
+      description:
+        'Long investors hate it and company bosses despise it. So why does the market allow people to barrack for misery?\nThe post Should short selling be banned? appeared first on The Motley Fool Australia.',
+      url: 'https://www.fool.com.au/2021/02/08/should-short-selling-be-banned/',
+      urlToImage:
+        'https://www.fool.com.au/wp-content/uploads/2021/01/stop-1.jpg',
+      publishedAt: '2021-02-07T21:30:44Z',
+      content:
+        'Very few things get people fired up more than short selling.\r\nTo many investors, it’s a mechanism available only to elite professionals that profit from the misery of others.\r\nAnd it’s not just retai… [+4409 chars]',
+    },
+    {
+      source: {
+        id: null,
+        name: 'Motley Fool Australia',
+      },
+      author: 'Tony Yoo',
+      title: 'Should short selling be banned?',
+      description:
+        'Long investors hate it and company bosses despise it. So why does the market allow people to barrack for misery?\nThe post Should short selling be banned? appeared first on The Motley Fool Australia.',
+      url: 'https://www.fool.com.au/2021/02/08/should-short-selling-be-banned/',
+      urlToImage:
+        'https://www.fool.com.au/wp-content/uploads/2021/01/stop-1.jpg',
+      publishedAt: '2021-02-07T21:30:44Z',
+      content:
+        'Very few things get people fired up more than short selling.\r\nTo many investors, it’s a mechanism available only to elite professionals that profit from the misery of others.\r\nAnd it’s not just retai… [+4409 chars]',
+    },
     {
       source: {
         id: null,

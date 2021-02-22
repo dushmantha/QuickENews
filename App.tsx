@@ -8,26 +8,52 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
+import auth from '@react-native-firebase/auth';
 import {AuthenticationNavigator} from './src/authentication';
 import {LoadAssets} from './src/components';
 import {ThemeProvider} from './src/components/Theme';
 import {AppRoutes} from './src/components/Navigation';
 import ContentRoutes from './src/navigation/ContentRoutes';
+import {adsRequestConfiguration} from './src/ads';
 const AppStack = createStackNavigator<AppRoutes>();
 
 const App = () => {
+  const [initializing, setInitializing] = useState(true);
+  const [currentUser, setCurrentUser] = useState();
+
+  const onAuthStateChanged = (user: any) => {
+    setCurrentUser(user);
+    if (initializing) {
+      setInitializing(false);
+    }
+  };
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  });
+
+  useEffect(() => {
+    adsRequestConfiguration();
+  });
+  if (initializing) {
+    return null;
+  }
+
   return (
     <ThemeProvider>
       <LoadAssets>
         <SafeAreaProvider>
           <AppStack.Navigator headerMode="none">
-            {/* <AppStack.Screen
-              name="Authentication"
-              component={AuthenticationNavigator}
-            /> */}
+            {!currentUser && (
+              <AppStack.Screen
+                name="Authentication"
+                component={AuthenticationNavigator}
+              />
+            )}
             <AppStack.Screen name="News" component={ContentRoutes} />
           </AppStack.Navigator>
         </SafeAreaProvider>

@@ -2,10 +2,12 @@ import React, {useRef} from 'react';
 import {TextInput as RNTextInput} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import auth from '@react-native-firebase/auth';
+import {CommonActions} from '@react-navigation/native';
+
 import {Container, Button, Text, Box} from '../components';
 import {AuthNavigationProps} from '../components/Navigation';
 import TextInput from '../components/Form/TextInput';
-
 import Footer from './components/Footer';
 
 const SignUpSchema = Yup.object().shape({
@@ -28,7 +30,29 @@ const SignUp = ({navigation}: AuthNavigationProps<'SignUp'>) => {
       passwordConfirmation: '',
       remember: true,
     },
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => {
+      auth()
+        .createUserWithEmailAndPassword(values.email, values.password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'News'}],
+            }),
+          );
+        })
+        .catch((error) => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+          console.error(error);
+        });
+    },
   });
   const password = useRef<RNTextInput>(null);
   const passwordConfirmation = useRef<RNTextInput>(null);

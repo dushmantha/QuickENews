@@ -2,17 +2,16 @@ import React, {useState} from 'react';
 import {
   SafeAreaView,
   TouchableOpacity,
-  Image,
   ScrollView,
   FlatList,
   StatusBar,
-  Platform,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Text, Box, useTheme, Size} from '../../components';
 import {HomeNavigationProps} from '../../components/Navigation';
 import {Images} from '../assets';
-
+import {BannerAdSize} from '@react-native-firebase/admob';
+import {Banner} from '../../ads/';
 import {
   allArticles,
   businessArticle,
@@ -30,17 +29,21 @@ const allNews = [
   politicsArticle,
   entertainment,
 ];
-import {NavigationBar} from '../components';
+import {NavigationBar, NewsList} from '../components';
 
 const BreakingNewsSection = ({navigation}: any) => {
   const renderItem = ({item, index}: any) => {
     return (
-      <Box alignItems="center">
+      <Box alignItems="center" flexDirection="row">
+        {(index + 1) % 4 === 0 && (
+          <Box paddingHorizontal="m" alignItems="center">
+            <Banner bannerAdSize={BannerAdSize.MEDIUM_RECTANGLE as any} />
+          </Box>
+        )}
         <TouchableOpacity
           style={{
             flex: 1,
-            marginLeft: index == 0 ? Size.paddings.l : 0,
-            marginRight: Size.paddings.l,
+            paddingHorizontal: Size.paddings.s,
           }}
           onPress={() =>
             // navigation.navigate("ArticleDetails", {
@@ -88,7 +91,7 @@ const BreakingNewsSection = ({navigation}: any) => {
         <FlatList
           data={breakingNews.articles}
           renderItem={renderItem}
-          keyExtractor={(item: any) => `${item.id}`}
+          keyExtractor={(item) => item.key}
           horizontal
           showsHorizontalScrollIndicator={false}
         />
@@ -133,88 +136,7 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
       </Box>
     );
   };
-
-  const newsList = () => {
-    var news: any = [];
-
-    let selectedCategoryNews = categories.filter(
-      (a: any) => a.id == selectedCategory,
-    );
-
-    if (selectedCategoryNews.length > 0) {
-      news = allNews[Math.floor(Math.random() * allNews.length)];
-    }
-
-    const renderItem = ({item}: any) => {
-      return (
-        <Box marginVertical="s" flex={1} flexDirection="row">
-          <Box flex={0.9}>
-            <TouchableOpacity
-              style={{flexDirection: 'row'}}
-              onPress={() => navigation.navigate('ArticleDetails')}>
-              <FastImage
-                source={{
-                  uri: item.urlToImage,
-                  priority: FastImage.priority.normal,
-                }}
-                resizeMode="cover"
-                style={{width: 100, height: 150, borderRadius: 10}}
-              />
-
-              <Box flex={1} marginLeft="m">
-                <Box paddingRight="l">
-                  <Text variant="title3" color="background2">
-                    {item.title}
-                  </Text>
-                  <Text variant="title3" color="lightGray" marginTop="s">
-                    {item.author}
-                  </Text>
-                </Box>
-                <Box flexDirection="row" marginTop="s">
-                  <Text
-                    paddingRight="l"
-                    variant="body4"
-                    color="grayFont"
-                    numberOfLines={4}>
-                    {item.description}
-                  </Text>
-                </Box>
-
-                {/* Genre */}
-              </Box>
-            </TouchableOpacity>
-          </Box>
-          {/* Bookmark Button */}
-          <Box flex={0.1}>
-            <TouchableOpacity
-              style={{position: 'absolute', top: 5, right: 15}}
-              onPress={() => console.log('Bookmark')}>
-              <Image
-                source={Images.bookmark}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: theme.colors.lightGray,
-                }}
-              />
-            </TouchableOpacity>
-          </Box>
-        </Box>
-      );
-    };
-
-    return (
-      <Box flex={1} marginTop="m" marginLeft="m" paddingBottom="m">
-        <FlatList
-          data={news.articles}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-        />
-      </Box>
-    );
-  };
-
+  //allNews[Math.floor(Math.random() * allNews.length)];
   return (
     <SafeAreaView
       style={{
@@ -246,7 +168,13 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
           {/* News Categories Section */}
           <Box marginTop="l">{categoryHeaders()}</Box>
           {/* News list Section */}
-          <Box>{newsList()}</Box>
+          <Box>
+            <NewsList
+              navigation={navigation}
+              news={allNews[Math.floor(Math.random() * allNews.length)]}
+              isBookmark={false}
+            />
+          </Box>
         </ScrollView>
       </Box>
     </SafeAreaView>
