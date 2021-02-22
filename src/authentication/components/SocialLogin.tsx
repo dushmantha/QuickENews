@@ -1,8 +1,18 @@
 /* eslint-disable max-len */
 import React, {ReactNode} from 'react';
 import Svg, {Path} from 'react-native-svg';
+import {TouchableOpacity} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import {LoginManager, AccessToken} from 'react-native-fbsdk';
+import {GoogleSignin} from '@react-native-community/google-signin';
+
 import {Box, useTheme} from '../../components';
 import {palette} from '../../components/Theme';
+
+GoogleSignin.configure({
+  webClientId:
+    '265833008446-jbiep2ngd32jdm06j7engi4afp5rqo9c.apps.googleusercontent.com',
+});
 
 const Google = () => (
   <Svg width={20} height={20} viewBox="0 0 20 20" fill="none">
@@ -70,16 +80,66 @@ const SocialLogin = () => {
   return (
     <Box flexDirection="row" justifyContent="center">
       <SocialIcon>
-        <Facebook />
+        <TouchableOpacity
+          onPress={() =>
+            onFacebookButtonPress().then(() =>
+              console.log('Signed in with Facebook!'),
+            )
+          }>
+          <Facebook />
+        </TouchableOpacity>
       </SocialIcon>
       <SocialIcon>
-        <Google />
+        <TouchableOpacity
+          onPress={() =>
+            onGoogleButtonPress().then(() =>
+              console.log('Signed in with Google!'),
+            )
+          }>
+          <Google />
+        </TouchableOpacity>
       </SocialIcon>
       {/* <SocialIcon>
         <Apple />
       </SocialIcon> */}
     </Box>
   );
+};
+
+const onFacebookButtonPress = async () => {
+  const result = await LoginManager.logInWithPermissions([
+    'public_profile',
+    'email',
+  ]);
+
+  if (result.isCancelled) {
+    throw 'User cancelled the login process';
+  }
+
+  // Once signed in, get the users AccesToken
+  const data = await AccessToken.getCurrentAccessToken();
+
+  if (!data) {
+    throw 'Something went wrong obtaining access token';
+  }
+
+  // Create a Firebase credential with the AccessToken
+  const facebookCredential = auth.FacebookAuthProvider.credential(
+    data.accessToken,
+  );
+
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(facebookCredential);
+};
+
+const onGoogleButtonPress = async () => {
+  const {idToken} = await GoogleSignin.signIn();
+
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
 };
 
 export default SocialLogin;

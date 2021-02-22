@@ -1,12 +1,13 @@
 import React from 'react';
-
+import auth from '@react-native-firebase/auth';
 import {Dimensions, Switch, TouchableOpacity} from 'react-native';
-import {Text, Box, useTheme, Size} from '../../components';
 import Icon from 'react-native-vector-icons/Feather';
-
+import {CommonActions} from '@react-navigation/native';
+import {Text, Box, useTheme, Size} from '../../components';
+import {HomeNavigationProps} from '../../components/Navigation';
 const {width} = Dimensions.get('window');
 
-const Setting = () => {
+const Setting = ({navigation}: HomeNavigationProps<'Setting'>) => {
   const theme = useTheme();
   const renderHeaderView = () => {
     return (
@@ -43,7 +44,18 @@ const Setting = () => {
             height={60}
             alignItems="center"
             justifyContent="center">
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+              onPress={() => {
+                auth()
+                  .signOut()
+                  .then(() =>
+                    navigation.dispatch(
+                      CommonActions.reset({
+                        routes: [{name: 'Welcome'}],
+                      }),
+                    ),
+                  );
+              }}>
               <Text variant="title2" textAlign="left" color="white">
                 Logout
               </Text>

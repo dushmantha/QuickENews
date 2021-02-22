@@ -2,10 +2,11 @@ import React from 'react';
 import {Linking} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import auth from '@react-native-firebase/auth';
+
 import {AuthNavigationProps} from '../components/Navigation';
 import {Container, Box, Button, Text} from '../components';
 import TextInput from '../components/Form/TextInput';
-
 import Footer from './components/Footer';
 
 const ForgotPasswordSchema = Yup.object().shape({
@@ -18,8 +19,16 @@ const ForgotPassword = ({
   const {handleChange, handleBlur, handleSubmit, errors, touched} = useFormik({
     validationSchema: ForgotPasswordSchema,
     initialValues: {email: ''},
-    onSubmit: () => {
-      navigation.navigate('PasswordChanged');
+    onSubmit: (values) => {
+      auth()
+        .sendPasswordResetEmail(values.email)
+        .then((user) => {
+          console.log('user deatils ', user);
+          navigation.navigate('PasswordChanged');
+        })
+        .catch(function (e: any) {
+          console.log(e);
+        });
     },
   });
   const footer = (

@@ -1,20 +1,13 @@
 /* eslint-disable max-len */
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  Image,
-} from 'react-native';
+import {StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import Animated, {Extrapolate, interpolateNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
-import FastImage from 'react-native-fast-image';
+import {BannerAdSize} from '@react-native-firebase/admob';
+import {Banner} from '../../ads/';
 
 import {Text, Box, useTheme, Size} from '../../components';
-import {NavigationBar} from '../components';
-import {Images} from '../assets';
+import {NavigationBar, NewsList} from '../components';
 import {allArticles} from '../../data/test/sampleData';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import {MIN_HEADER_HEIGHT} from './Header';
@@ -30,9 +23,10 @@ export interface TabModel {
 interface ContentProps {
   y: Animated.Node<number>;
   onMeasurement: (index: number, tab: TabModel) => void;
+  navigation: any;
 }
 
-export default ({y}: ContentProps) => {
+export default ({y, navigation}: ContentProps) => {
   const theme = useTheme();
   const opacity = interpolateNode(y, {
     inputRange: [
@@ -94,86 +88,18 @@ export default ({y}: ContentProps) => {
       <Text marginBottom="l" marginHorizontal="m" variant="body">
         {allArticles.articles[0].description}
       </Text>
+      <Box paddingVertical="m" alignItems="center">
+        <Banner bannerAdSize={BannerAdSize.MEDIUM_RECTANGLE as any} />
+      </Box>
       <Box marginVertical="l">
-        <RecommendedNews />
+        <RecommendedNews navigation={navigation} />
       </Box>
     </Box>
   );
 };
 
-const RecommendedNews = () => {
+const RecommendedNews = ({navigation}: {navigation: any}) => {
   const theme = useTheme();
-  const newsList = () => {
-    var news: any = allArticles;
-    const renderItem = ({item}: any) => {
-      return (
-        <Box marginVertical="s" flex={1} flexDirection="row">
-          <Box flex={0.9}>
-            <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => {}}>
-              <FastImage
-                source={{
-                  uri: item.urlToImage,
-                  priority: FastImage.priority.normal,
-                }}
-                resizeMode="cover"
-                style={{width: 100, height: 150, borderRadius: 10}}
-              />
-
-              <Box flex={1} marginLeft="m">
-                <Box paddingRight="l">
-                  <Text variant="title3" color="background2">
-                    {item.title}
-                  </Text>
-                  <Text variant="title3" color="lightGray" marginTop="s">
-                    {item.author}
-                  </Text>
-                </Box>
-                <Box flexDirection="row" marginTop="s">
-                  <Text
-                    paddingRight="l"
-                    variant="body4"
-                    color="grayFont"
-                    numberOfLines={4}>
-                    {item.description}
-                  </Text>
-                </Box>
-
-                {/* Genre */}
-              </Box>
-            </TouchableOpacity>
-          </Box>
-          {/* Bookmark Button */}
-          <Box flex={0.1}>
-            <TouchableOpacity
-              style={{position: 'absolute', top: 5, right: 15}}
-              onPress={() => console.log('Bookmark')}>
-              <Image
-                source={Images.bookmark}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: theme.colors.lightGray,
-                }}
-              />
-            </TouchableOpacity>
-          </Box>
-        </Box>
-      );
-    };
-
-    return (
-      <Box flex={1} marginTop="m" marginLeft="m" paddingBottom="m">
-        <FlatList
-          data={news.articles}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(_, index) => index.toString()}
-        />
-      </Box>
-    );
-  };
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.colors.background}}>
       <Box flex={1}>
@@ -189,7 +115,13 @@ const RecommendedNews = () => {
           }}
           showsVerticalScrollIndicator={false}>
           {/* News list Section */}
-          <Box>{newsList()}</Box>
+          <Box>
+            <NewsList
+              navigation={navigation}
+              news={allArticles}
+              isBookmark={false}
+            />
+          </Box>
         </ScrollView>
       </Box>
     </SafeAreaView>

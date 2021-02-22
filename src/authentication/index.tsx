@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {AuthenticationRoutes} from '../components/Navigation';
 
-import Welcome, {assets as welcomeAssets} from './Welcome';
+import Welcome from './Welcome';
 import Login from './Login';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
