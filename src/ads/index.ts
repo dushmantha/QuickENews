@@ -1,3 +1,8 @@
 import adsRequestConfiguration from './adsRequestConfiguration';
 import {Banner} from './Ads';
-export {adsRequestConfiguration, Banner};
+// import {europeanUserAds, AdConsentContext} from './europeanUserAds';
+export {
+  adsRequestConfiguration,
+  Banner,
+  // europeanUserAds, AdConsentContext
+};

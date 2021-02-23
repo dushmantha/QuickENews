@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   BannerAd,
   FirebaseAdMobTypes,
   RewardedAd,
   RewardedAdEventType,
   TestIds,
+  AdsConsentStatus,
 } from '@react-native-firebase/admob';
 import {Platform, Button} from 'react-native';
-
+import {AdConsentContext} from './europeanUserAds';
 const adBannerUnitId = __DEV__
   ? TestIds.BANNER
   : Platform.OS === 'android'
@@ -20,18 +21,16 @@ const adRewardedUnitId = __DEV__
   ? 'ca-app-pub-7757836269117697/1169954122'
   : 'ca-app-pub-7757836269117697/3517464603';
 
-const rewarded = RewardedAd.createForAdRequest(adRewardedUnitId, {
-  requestNonPersonalizedAdsOnly: true,
-  keywords: ['fashion', 'clothing'],
-});
-
 const Banner = (size: {bannerAdSize: FirebaseAdMobTypes.BannerAdSize}) => {
+  // const status = useContext(AdConsentContext);
   return (
     <BannerAd
       unitId={adBannerUnitId}
       size={size.bannerAdSize}
       // size={bannerAdSize.FULL_BANNER}
       requestOptions={{
+        // requestNonPersonalizedAdsOnly:
+        //   status === AdsConsentStatus.NON_PERSONALIZED,
         requestNonPersonalizedAdsOnly: true,
       }}
       onAdLoaded={() => {
@@ -53,6 +52,12 @@ const Banner = (size: {bannerAdSize: FirebaseAdMobTypes.BannerAdSize}) => {
 
 const Rewarded = () => {
   const [loaded, setLoaded] = useState(false);
+  // const status = useContext(AdConsentContext);
+  const rewarded = RewardedAd.createForAdRequest(adRewardedUnitId, {
+    // requestNonPersonalizedAdsOnly: status === AdsConsentStatus.NON_PERSONALIZED,
+    requestNonPersonalizedAdsOnly: true,
+    keywords: ['fashion', 'clothing'],
+  });
 
   useEffect(() => {
     const eventListener = rewarded.onAdEvent((type, error, reward) => {
@@ -72,7 +77,7 @@ const Rewarded = () => {
     return () => {
       eventListener();
     };
-  }, []);
+  });
 
   // No advert ready to show yet
   if (!loaded) {

@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
 import {Text, Box, useTheme} from '../../components';
-import {Images} from '../assets';
+// import {Images} from '../assets';
 
 type NewsListProps = {
   news: any;
@@ -13,7 +13,7 @@ type NewsListProps = {
 };
 
 const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
-  const theme = useTheme();
+  // const theme = useTheme();
   const renderItem = ({item, index}: any) => {
     return (
       <Box alignItems="center">

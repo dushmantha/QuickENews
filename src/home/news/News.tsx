@@ -12,7 +12,7 @@ import {HomeNavigationProps} from '../../components/Navigation';
 import {Images} from '../assets';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
-import {breakingNews, newsCategory} from '../../data/test/sampleData';
+import {newsCategory} from '../../data/test/sampleData';
 
 import {NavigationBar, NewsList} from '../components';
 import {useNewsList, useBreakingNews} from '../../services/';

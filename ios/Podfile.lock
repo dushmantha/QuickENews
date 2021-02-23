@@ -260,6 +260,9 @@ PODS:
   - Firebase/Firestore (7.6.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 7.6.0)
+  - Firebase/Messaging (7.6.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 7.6.0)
   - FirebaseAuth (7.6.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
@@ -286,6 +289,23 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30907.0)
+  - FirebaseInstallations (7.6.0):
+    - FirebaseCore (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstanceID (7.6.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstallations (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/UserDefaults (~> 7.0)
+  - FirebaseMessaging (7.6.0):
+    - FirebaseCore (~> 7.0)
+    - FirebaseInstanceID (~> 7.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/Environment (~> 7.0)
+    - GoogleUtilities/Reachability (~> 7.0)
+    - GoogleUtilities/UserDefaults (~> 7.0)
   - Flipper (0.54.0):
     - Flipper-Folly (~> 2.2)
     - Flipper-RSocket (~> 1.1)
@@ -374,6 +394,8 @@ PODS:
     - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.2.2)"
   - GoogleUtilities/Reachability (7.2.2):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.2.2):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.28.2)":
     - "gRPC-C++/Implementation (= 1.28.2)"
@@ -675,20 +697,24 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.8)
     - SDWebImageWebPCoder (~> 0.6.1)
-  - RNFBAdMob (10.8.0):
+  - RNFBAdMob (10.8.1):
     - Firebase/AdMob (~> 7.6.0)
     - PersonalizedAdConsent (~> 1.0.4)
     - React-Core
     - RNFBApp
-  - RNFBApp (10.8.0):
+  - RNFBApp (10.8.1):
     - Firebase/CoreOnly (~> 7.6.0)
     - React-Core
-  - RNFBAuth (10.8.0):
+  - RNFBAuth (10.8.1):
     - Firebase/Auth (~> 7.6.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (10.8.0):
+  - RNFBFirestore (10.8.1):
     - Firebase/Firestore (~> 7.6.0)
+    - React-Core
+    - RNFBApp
+  - RNFBMessaging (10.8.1):
+    - Firebase/Messaging (~> 7.6.0)
     - React-Core
     - RNFBApp
   - RNGestureHandler (1.10.1):
@@ -796,6 +822,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
+  - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-community/google-signin`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -820,6 +847,9 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
+    - FirebaseInstallations
+    - FirebaseInstanceID
+    - FirebaseMessaging
     - Flipper
     - Flipper-DoubleConversion
     - Flipper-Folly
@@ -914,6 +944,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
+  RNFBMessaging:
+    :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
@@ -947,6 +979,9 @@ SPEC CHECKSUMS:
   FirebaseCore: 0a43b7f1c5b36f3358cd703011ca4c7e0df55870
   FirebaseCoreDiagnostics: ee1184d51da3293335b83355aad20f537acc24cf
   FirebaseFirestore: b860346d5095c741528efac94995bab39275d0bf
+  FirebaseInstallations: 6e4e77396559bc2ae0504823837ed737b1c7e47f
+  FirebaseInstanceID: cf243611700eddc916b093353adbd4da822cfa63
+  FirebaseMessaging: 4b9b2850fcfcaac2820097ee3703ba6cfff3df84
   Flipper: be611d4b742d8c87fbae2ca5f44603a02539e365
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
   Flipper-Folly: e4493b013c02d9347d5e0cb4d128680239f6c78a
@@ -996,10 +1031,11 @@ SPEC CHECKSUMS:
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
-  RNFBAdMob: 67ba1fca47ea74bb7356b58584bfb27af96665b4
-  RNFBApp: 97b618641633d6d23187a9d0537c3893482c483f
-  RNFBAuth: 7c6c9e7289d98709cd5d1333d829925f81823375
-  RNFBFirestore: 859fc78b3dc89ef10e430b39cd9f14e07ef4e158
+  RNFBAdMob: 11365dcc37bcadea3afcdf04e1b82906a501d3b6
+  RNFBApp: 02bde3edecf2e9694b908a5d3504e03449980f20
+  RNFBAuth: 16f2b91bf53f398d83a15cff0dd52225967c1d78
+  RNFBFirestore: 337b96bf5b1b2d32bb9fc4735afd47b16532dde8
+  RNFBMessaging: 1823217d31e942531cc3f51fb5367dcbc69c1e10
   RNGestureHandler: 5e58135436aacc1c5d29b75547d3d2b9430d052c
   RNGoogleSignin: ad866d4c4af2651e36801dd3b7771d7715353499
   RNReanimated: ca4f28c765329144d68bdad126bf6b0b1afc7a5a

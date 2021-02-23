@@ -17,12 +17,18 @@ import {LoadAssets} from './src/components';
 import {ThemeProvider} from './src/components/Theme';
 import {AppRoutes} from './src/components/Navigation';
 import ContentRoutes from './src/navigation/ContentRoutes';
-import {adsRequestConfiguration} from './src/ads';
+// import {AdsConsent} from '@react-native-firebase/admob';
+import {
+  adsRequestConfiguration,
+  // europeanUserAds,
+  // AdConsentContext,
+} from './src/ads';
 const AppStack = createStackNavigator<AppRoutes>();
 
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [currentUser, setCurrentUser] = useState();
+  const [state, setState] = useState(1);
 
   const onAuthStateChanged = (user: any) => {
     setCurrentUser(user);
@@ -37,16 +43,27 @@ const App = () => {
   });
 
   useEffect(() => {
+    // const getStatus = async () => {
+    //   await europeanUserAds();
+    //   setState(await AdsConsent.getStatus());
+    //   try {
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // };
+    // getStatus();
     adsRequestConfiguration();
   });
+
   if (initializing) {
     return null;
   }
-
+  console.log('print --------AADD', state);
   return (
     <ThemeProvider>
       <LoadAssets>
         <SafeAreaProvider>
+          {/* <AdConsentContext.Provider value={state}> */}
           <AppStack.Navigator headerMode="none">
             {!currentUser && (
               <AppStack.Screen
@@ -56,6 +73,7 @@ const App = () => {
             )}
             <AppStack.Screen name="News" component={ContentRoutes} />
           </AppStack.Navigator>
+          {/* </AdConsentContext.Provider> */}
         </SafeAreaProvider>
       </LoadAssets>
     </ThemeProvider>
