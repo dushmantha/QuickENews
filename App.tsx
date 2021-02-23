@@ -17,18 +17,12 @@ import {LoadAssets} from './src/components';
 import {ThemeProvider} from './src/components/Theme';
 import {AppRoutes} from './src/components/Navigation';
 import ContentRoutes from './src/navigation/ContentRoutes';
-// import {AdsConsent} from '@react-native-firebase/admob';
-import {
-  adsRequestConfiguration,
-  // europeanUserAds,
-  // AdConsentContext,
-} from './src/ads';
+import {AdConsentContext, useAddConfig} from './src/ads';
 const AppStack = createStackNavigator<AppRoutes>();
 
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [currentUser, setCurrentUser] = useState();
-  // const [state, setState] = useState(1);
 
   const onAuthStateChanged = (user: any) => {
     setCurrentUser(user);
@@ -36,25 +30,11 @@ const App = () => {
       setInitializing(false);
     }
   };
-
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   });
-
-  useEffect(() => {
-    // const getStatus = async () => {
-    //   await europeanUserAds();
-    //   setState(await AdsConsent.getStatus());
-    //   try {
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // };
-    // getStatus();
-    adsRequestConfiguration();
-  });
-
+  const adStatus = useAddConfig();
   if (initializing) {
     return null;
   }
@@ -62,17 +42,17 @@ const App = () => {
     <ThemeProvider>
       <LoadAssets>
         <SafeAreaProvider>
-          {/* <AdConsentContext.Provider value={state}> */}
-          <AppStack.Navigator headerMode="none">
-            {!currentUser && (
-              <AppStack.Screen
-                name="Authentication"
-                component={AuthenticationNavigator}
-              />
-            )}
-            <AppStack.Screen name="News" component={ContentRoutes} />
-          </AppStack.Navigator>
-          {/* </AdConsentContext.Provider> */}
+          <AdConsentContext.Provider value={adStatus}>
+            <AppStack.Navigator headerMode="none">
+              {!currentUser && (
+                <AppStack.Screen
+                  name="Authentication"
+                  component={AuthenticationNavigator}
+                />
+              )}
+              <AppStack.Screen name="News" component={ContentRoutes} />
+            </AppStack.Navigator>
+          </AdConsentContext.Provider>
         </SafeAreaProvider>
       </LoadAssets>
     </ThemeProvider>

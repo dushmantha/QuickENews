@@ -22,16 +22,17 @@ const adRewardedUnitId = __DEV__
   : 'ca-app-pub-7757836269117697/3517464603';
 
 const Banner = (size: {bannerAdSize: FirebaseAdMobTypes.BannerAdSize}) => {
-  // const status = useContext(AdConsentContext);
+  const status = useContext(AdConsentContext);
+  console.log('When an ad has finished loading', adRewardedUnitId);
   return (
     <BannerAd
       unitId={adBannerUnitId}
       size={size.bannerAdSize}
       // size={bannerAdSize.FULL_BANNER}
       requestOptions={{
-        // requestNonPersonalizedAdsOnly:
-        //   status === AdsConsentStatus.NON_PERSONALIZED,
-        requestNonPersonalizedAdsOnly: true,
+        requestNonPersonalizedAdsOnly:
+          status === AdsConsentStatus.NON_PERSONALIZED,
+        // requestNonPersonalizedAdsOnly: true,
       }}
       onAdLoaded={() => {
         console.log('When an ad has finished loading');
@@ -57,10 +58,10 @@ const Banner = (size: {bannerAdSize: FirebaseAdMobTypes.BannerAdSize}) => {
 
 const Rewarded = () => {
   const [loaded, setLoaded] = useState(false);
-  // const status = useContext(AdConsentContext);
+  const status = useContext(AdConsentContext);
   const rewarded = RewardedAd.createForAdRequest(adRewardedUnitId, {
-    // requestNonPersonalizedAdsOnly: status === AdsConsentStatus.NON_PERSONALIZED,
-    requestNonPersonalizedAdsOnly: true,
+    requestNonPersonalizedAdsOnly: status === AdsConsentStatus.NON_PERSONALIZED,
+    // requestNonPersonalizedAdsOnly: true,
     keywords: ['fashion', 'clothing'],
   });
 

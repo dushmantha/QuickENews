@@ -1,16 +1,19 @@
-import {createContext, useState} from 'react';
+import {createContext} from 'react';
 import {
   AdsConsent,
   AdsConsentStatus,
   AdsConsentDebugGeography,
+  TestIds,
 } from '@react-native-firebase/admob';
+import {Platform} from 'react-native';
+const adRewardedUnitId = __DEV__
+  ? TestIds.BANNER
+  : Platform.OS === 'android'
+  ? 'ca-app-pub-7757836269117697/1169954122'
+  : 'ca-app-pub-7757836269117697/3517464603';
 
 const europeanUserAds = async () => {
-  console.log('print --------consentInfo');
-  const consentInfo = await AdsConsent.requestInfoUpdate([
-    'pub-7757836269117697',
-  ]);
-  console.log('print --------consentInfo', consentInfo);
+  const consentInfo = await AdsConsent.requestInfoUpdate([adRewardedUnitId]);
   // this is only for testing...
   __DEV__ && (await AdsConsent.setDebugGeography(AdsConsentDebugGeography.EEA));
   if (
@@ -22,14 +25,12 @@ const europeanUserAds = async () => {
       withPersonalizedAds: true,
       withNonPersonalizedAds: true,
     });
-    console.log('print --------AADDKKK', formResult.status);
     // The user requested non-personalized or personalized ads
     await AdsConsent.setStatus(formResult.status);
   } else if (
     consentInfo.isRequestLocationInEeaOrUnknown &&
     consentInfo.status !== AdsConsentStatus.UNKNOWN
   ) {
-    console.log('print --------AADD', AdsConsentStatus.PERSONALIZED);
     await AdsConsent.setStatus(AdsConsentStatus.PERSONALIZED);
   }
 };
