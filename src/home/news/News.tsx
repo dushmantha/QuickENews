@@ -12,24 +12,10 @@ import {HomeNavigationProps} from '../../components/Navigation';
 import {Images} from '../assets';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
-import {
-  allArticles,
-  businessArticle,
-  scienceAndTechArticle,
-  politicsArticle,
-  entertainment,
-  breakingNews,
-  newsCategory,
-} from '../../data/test/sampleData';
+import {breakingNews, newsCategory} from '../../data/test/sampleData';
 
-const allNews = [
-  allArticles,
-  businessArticle,
-  scienceAndTechArticle,
-  politicsArticle,
-  entertainment,
-];
 import {NavigationBar, NewsList} from '../components';
+import {useNewsList, useBreakingNews} from '../../services/';
 
 const BreakingNewsSection = ({navigation}: any) => {
   const renderItem = ({item, index}: any) => {
@@ -89,9 +75,9 @@ const BreakingNewsSection = ({navigation}: any) => {
       </Box>
       <Box flex={1} marginTop="l">
         <FlatList
-          data={breakingNews.articles}
+          keyExtractor={(_, index) => index.toString()}
+          data={useBreakingNews()}
           renderItem={renderItem}
-          keyExtractor={(item) => item.key}
           horizontal
           showsHorizontalScrollIndicator={false}
         />
@@ -130,7 +116,7 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
           data={categories}
           showsHorizontalScrollIndicator={false}
           renderItem={renderItem}
-          keyExtractor={(item) => `${item.id}`}
+          keyExtractor={(_, index) => index.toString()}
           horizontal
         />
       </Box>
@@ -171,7 +157,7 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
           <Box>
             <NewsList
               navigation={navigation}
-              news={allNews[Math.floor(Math.random() * allNews.length)]}
+              news={useNewsList()}
               isBookmark={false}
             />
           </Box>

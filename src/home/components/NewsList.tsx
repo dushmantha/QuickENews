@@ -23,7 +23,7 @@ const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
           </Box>
         )}
         <Box marginVertical="s" flex={1} flexDirection="row">
-          <Box flex={0.9}>
+          <Box flex={1}>
             <TouchableOpacity
               style={{flexDirection: 'row'}}
               onPress={() => navigation.navigate('ArticleDetails')}>
@@ -47,7 +47,7 @@ const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
                 </Box>
                 <Box flexDirection="row" marginTop="s">
                   <Text
-                    paddingRight="l"
+                    // paddingRight="l"
                     variant="body4"
                     color="grayFont"
                     numberOfLines={4}>
@@ -60,7 +60,7 @@ const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
             </TouchableOpacity>
           </Box>
           {/* Bookmark Button */}
-          <Box flex={0.1}>
+          {/* <Box flex={0.1}>
             <TouchableOpacity onPress={() => console.log('Bookmark')}>
               <Image
                 source={Images.bookmark}
@@ -72,7 +72,7 @@ const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
                 }}
               />
             </TouchableOpacity>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     );
@@ -86,8 +86,8 @@ const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
         </Box>
       )}
       <FlatList
-        keyExtractor={(item) => item.key}
-        data={news.articles}
+        keyExtractor={(_, index) => index.toString()}
+        data={news}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />

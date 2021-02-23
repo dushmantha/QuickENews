@@ -2,9 +2,8 @@ import React from 'react';
 import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import {Box, useTheme, Size} from '../../components';
 import {HomeNavigationProps} from '../../components/Navigation';
-import {allArticles} from '../../data/test/sampleData';
 import {NavigationBar, NewsList} from '../components';
-
+import {useGetBookmark} from '../../services/';
 const Bookmark = ({navigation}: HomeNavigationProps<'Bookmark'>) => {
   const theme = useTheme();
   return (
@@ -35,7 +34,7 @@ const Bookmark = ({navigation}: HomeNavigationProps<'Bookmark'>) => {
           <Box>
             <NewsList
               navigation={navigation}
-              news={allArticles}
+              news={useGetBookmark()}
               isBookmark={true}
             />
           </Box>
