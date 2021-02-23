@@ -28,7 +28,7 @@ const AppStack = createStackNavigator<AppRoutes>();
 const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [currentUser, setCurrentUser] = useState();
-  const [state, setState] = useState(1);
+  // const [state, setState] = useState(1);
 
   const onAuthStateChanged = (user: any) => {
     setCurrentUser(user);
@@ -58,7 +58,6 @@ const App = () => {
   if (initializing) {
     return null;
   }
-  console.log('print --------AADD', state);
   return (
     <ThemeProvider>
       <LoadAssets>

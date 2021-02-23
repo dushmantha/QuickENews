@@ -34,11 +34,16 @@ const Banner = (size: {bannerAdSize: FirebaseAdMobTypes.BannerAdSize}) => {
         requestNonPersonalizedAdsOnly: true,
       }}
       onAdLoaded={() => {
+        console.log('When an ad has finished loading');
         /**
-         * When an ad has failed to load. Callback contains an Error.
+         * When an ad has finished loading..
          */
       }}
-      onAdFailedToLoad={() => {
+      onAdFailedToLoad={(err) => {
+        console.log(
+          'When an ad has failed to load. Callback contains an Error',
+          err,
+        );
         /**
          * The ad is now visible to the user.
          */
