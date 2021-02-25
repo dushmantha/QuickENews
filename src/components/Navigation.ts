@@ -33,4 +33,10 @@ export type HomeRoutes = {
   Setting: undefined;
   Bookmark: undefined;
   ArticleDetails: undefined;
+  PushNotification: undefined;
+  DisplaySetting: undefined;
+  DataUsage: undefined;
+  Autoplay: undefined;
+  About: undefined;
+  Support: undefined;
 };
