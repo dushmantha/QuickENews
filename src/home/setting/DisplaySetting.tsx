@@ -14,20 +14,26 @@ const DisplaySetting = () => {
       <Box borderColor="background2" borderRadius="l" borderWidth={0.5}>
         <Box marginVertical="l" margin="m">
           <Text variant="title3">TEXT SIZE</Text>
-          <Box flexDirection="row" justifyContent="space-between" marginTop="l">
-            <Box>
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            marginTop="l"
+            flex={1}>
+            <Box flex={0.9}>
               <Text>Use System Text Size</Text>
               <Text>Switch off to set text size for this app below</Text>
             </Box>
-            <Switch
-              style={{alignSelf: 'center'}}
-              trackColor={{
-                true: theme.colors.background2,
-                false: theme.colors.lightGray,
-              }}
-              onValueChange={() => {}}
-              value={true}
-            />
+            <Box flex={0.1}>
+              <Switch
+                style={{alignSelf: 'center'}}
+                trackColor={{
+                  true: theme.colors.background2,
+                  false: theme.colors.lightGray,
+                }}
+                onValueChange={() => {}}
+                value={true}
+              />
+            </Box>
           </Box>
           <Box marginVertical="l" flexDirection="row" alignItems="center">
             <Text variant="body">A</Text>

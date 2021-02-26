@@ -1,26 +1,13 @@
 import React, {useState} from 'react';
 import {Dimensions, FlatList, TouchableOpacity} from 'react-native';
-import {Text, Box, useTheme} from '../../components';
 import Icon from 'react-native-vector-icons/Feather';
+import {Text, Box} from '../../components';
+import {autoPlayOptions} from './constants';
+
 const {width} = Dimensions.get('window');
 
 const Autoplay = () => {
   const [selectIndex, setSelectIndex] = useState(0);
-  const itemList = [
-    {
-      title: 'Mobile Data and Wifi Networks',
-      index: 0,
-    },
-    {
-      title: 'Wifi Only',
-      index: 1,
-    },
-    {
-      title: 'Never Autoplay Video',
-      index: 2,
-    },
-  ];
-
   const renderItem = ({item, index}: any) => {
     return (
       <Box margin="s">
@@ -54,8 +41,9 @@ const Autoplay = () => {
       </Box>
       <Box borderColor="background2" borderRadius="s" borderWidth={0.5}>
         <FlatList
+          bounces={false}
           keyExtractor={(_, index) => index.toString()}
-          data={itemList}
+          data={autoPlayOptions}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
         />

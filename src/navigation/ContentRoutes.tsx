@@ -8,7 +8,7 @@ import {
   Setting,
   Bookmark,
   About,
-  Support,
+  Questions,
   AutoPlay,
   DataUsage,
   DisplaySetting,
@@ -74,7 +74,11 @@ const ContentRoutes = () => {
         options={screenOption}
       />
       <Stack.Screen name="About" component={About} options={screenOption} />
-      <Stack.Screen name="Support" component={Support} options={screenOption} />
+      <Stack.Screen
+        name="Questions"
+        component={Questions}
+        options={screenOption}
+      />
     </Stack.Navigator>
   );
 };

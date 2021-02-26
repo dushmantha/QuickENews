@@ -1,25 +1,11 @@
 import React from 'react';
 import {Dimensions, Switch, FlatList} from 'react-native';
 import {Text, Box, Button, useTheme} from '../../components';
+import {dataUsageOption} from './constants';
 const {width} = Dimensions.get('window');
 
 const DataUsage = () => {
   const theme = useTheme();
-  const itemList = [
-    {
-      title: 'Automatic Refresh',
-      id: 1,
-      subTitle:
-        'Turning off automatic refresh will prevent content from updating automatically. Pull to refresh on any section front to get new content',
-    },
-    {
-      title: 'Download Images',
-      id: 2,
-      subTitle:
-        'Turning off images will prevent all images form displaying on section fronts to reduce data usage.',
-    },
-  ];
-
   const renderItem = ({item}: any) => {
     return (
       <Box margin="s">
@@ -32,7 +18,7 @@ const DataUsage = () => {
             <Text variant="body3">{item.title}</Text>
             <Text>{item.subTitle}</Text>
           </Box>
-          <Box flex={0.1} marginHorizontal="s">
+          <Box flex={0.15} marginHorizontal="s" alignSelf="center">
             <Switch
               style={{alignSelf: 'center'}}
               trackColor={{
@@ -52,8 +38,9 @@ const DataUsage = () => {
     <Box padding="m" width={width} justifyContent="center" alignSelf="center">
       <Box borderColor="background2" borderRadius="s" borderWidth={0.5}>
         <FlatList
+          bounces={false}
           keyExtractor={(_, index) => index.toString()}
-          data={itemList}
+          data={dataUsageOption}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
         />

@@ -1,13 +1,13 @@
 import React from 'react';
-import {StyleSheet, Platform, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {withTimingTransition, useValue} from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Feather';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+// import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import TabHeader from './TabHeader';
-import {TabModel} from './Content';
 import {Box, useTheme, Size} from '../../components';
+import {News} from '../../types';
 
 const ICON_SIZE = 24;
 const PADDING = 16;
@@ -32,16 +32,17 @@ const styles = StyleSheet.create({
 
 interface HeaderProps {
   y: Animated.Value<number>;
-  tabModel: TabModel;
   goBack: () => void;
+  news: News;
 }
 
-export default ({y, tabModel, goBack}: HeaderProps) => {
+export default ({y, goBack, news}: HeaderProps) => {
   const theme = useTheme();
   const toggle = useValue<0 | 1>(0);
   const transition = withTimingTransition(toggle, {duration: 100});
-  const insets = useSafeAreaInsets();
-  const {top: paddingTop} = insets;
+  // const insets = useSafeAreaInsets();
+  // const {top: paddingTop} = insets;
+  const statusBarHeight = 54;
   const translateX = interpolateNode(y, {
     inputRange: [0, HEADER_IMAGE_HEIGHT],
     outputRange: [-ICON_SIZE - PADDING, 0],
@@ -51,10 +52,8 @@ export default ({y, tabModel, goBack}: HeaderProps) => {
     inputRange: [-100, 0, HEADER_IMAGE_HEIGHT],
     outputRange: [
       HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT + 100,
-      HEADER_IMAGE_HEIGHT -
-        MIN_HEADER_HEIGHT +
-        (Platform.OS === 'android' ? 60 : 10),
-      0,
+      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT,
+      -10,
     ],
     extrapolateRight: Extrapolate.CLAMP,
   });
@@ -64,9 +63,8 @@ export default ({y, tabModel, goBack}: HeaderProps) => {
     y,
   ]);
   return (
-    <Animated.View style={[styles.container, {paddingTop}]}>
+    <Animated.View style={[styles.container, {paddingTop: statusBarHeight}]}>
       <Animated.View
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           ...StyleSheet.absoluteFillObject,
           opacity,
@@ -78,30 +76,40 @@ export default ({y, tabModel, goBack}: HeaderProps) => {
         height={MIN_HEADER_HEIGHT}
         alignItems="center"
         paddingHorizontal="l">
-        <TouchableOpacity onPress={goBack}>
-          <Box>
-            <Icon name="arrow-left" size={ICON_SIZE} color="white" />
-            <Animated.View
-              style={{...StyleSheet.absoluteFillObject, opacity: transition}}>
-              <Icon name="arrow-left" size={ICON_SIZE} color="black" />
-            </Animated.View>
-          </Box>
+        <TouchableOpacity
+          onPress={goBack}
+          style={{marginTop: -statusBarHeight}}>
+          <Icon name="arrow-left" size={ICON_SIZE} color="white" />
+          <Animated.View
+            style={{...StyleSheet.absoluteFillObject, opacity: transition}}>
+            <Icon name="arrow-left" size={ICON_SIZE} color="black" />
+          </Animated.View>
         </TouchableOpacity>
+
         <Animated.Text
+          numberOfLines={2}
           style={[
-            theme.textVariants.title2,
-            // eslint-disable-next-line react-native/no-inline-styles
+            theme.textVariants.title3,
             {
               transform: [{translateX}, {translateY}],
               flex: 1,
-              marginLeft: Size.paddings.l,
+              marginLeft: Size.paddings.m,
+              color: theme.colors.background2,
             },
           ]}>
-          Miss Miu Europaallee
+          {news.title}
         </Animated.Text>
-        <Icon name="bookmark" size={ICON_SIZE} color="white" />
+        <TouchableOpacity
+          onPress={() => {}}
+          style={{marginTop: -statusBarHeight}}>
+          <Icon name="bookmark" size={ICON_SIZE} color="white" />
+          <Animated.View
+            style={{...StyleSheet.absoluteFillObject, opacity: transition}}>
+            <Icon name="bookmark" size={ICON_SIZE} color="black" />
+          </Animated.View>
+        </TouchableOpacity>
       </Box>
-      <TabHeader {...{transition, tabModel}} />
+      <TabHeader {...{transition, news}} />
     </Animated.View>
   );
 };

@@ -1,47 +1,80 @@
 import React from 'react';
-import {Dimensions, TouchableOpacity, SectionList} from 'react-native';
-import {Text, Box} from '../../components';
+import {Dimensions, TouchableOpacity, SectionList, Linking} from 'react-native';
+import {openComposer} from 'react-native-email-link';
 import Icon from 'react-native-vector-icons/Feather';
+import {Text, Box} from '../../components';
+import {SettingTypes} from '.././../types';
+import {settingSectionList} from './constants';
+import {html} from './html';
 const {width} = Dimensions.get('window');
 
 const GroupList = ({navigation}: any) => {
-  const sectionList = [
-    {
-      title: 'General',
-      data: [
-        {name: 'Push Notification Settings', id: 1, navigate: true},
-        {name: 'Display Settings', id: 2, navigate: true},
-        {name: 'Data Usage', id: 3, navigate: true},
-        {name: 'Autoplay Videos', id: 4, navigate: true},
-      ],
-    },
-    {
-      title: 'Support',
-      data: [
-        {name: 'Report a Bug', id: 5, navigate: false},
-        {name: 'Subscription Question', id: 6, navigate: false},
-        {name: 'Report a Nes Error', id: 7, navigate: false},
-        {name: 'Call Us', id: 8, navigate: false},
-        {name: 'Frequently Asked Question', id: 9, navigate: false},
-      ],
-    },
-    {
-      title: 'About',
-      data: [
-        {name: 'Term of Service', id: 10, navigate: true},
-        {name: 'Privacy Policy', id: 11, navigate: true},
-        {name: 'Version', id: 12, navigate: false, number: 1.1},
-        {name: 'Build', id: 13, navigate: false, number: 2.1},
-        {name: 'Frequently Asked Question', id: 14, navigate: true},
-      ],
-    },
-  ];
+  const routes = (navigateIdentifier: string) => {
+    switch (navigateIdentifier) {
+      case SettingTypes.pushNotification:
+        navigation.navigate('PushNotification');
+        break;
+      case SettingTypes.displaySetting:
+        navigation.navigate('DisplaySetting');
+        break;
+      case SettingTypes.dataUsage:
+        navigation.navigate('DataUsage');
+        break;
+      case SettingTypes.autoplayVideos:
+        navigation.navigate('Autoplay');
+        break;
+      case SettingTypes.reportBug:
+        openComposer({
+          to: 'support@example.com',
+          subject: 'Reporting bug',
+          body: 'Hi, I am sending this email...',
+        });
+        break;
+      case SettingTypes.subscriptionQuestion:
+        openComposer({
+          to: 'support@example.com',
+          subject: 'Subscription Question',
+          body: 'Hi, I am sending this email...',
+        });
+        break;
+      case SettingTypes.reportNewsError:
+        openComposer({
+          to: 'support@example.com',
+          subject: 'News Error',
+          body: 'Hi, I am sending this email...',
+        });
+        break;
+      case SettingTypes.callUs:
+        Linking.openURL('tel:8777111223');
+        break;
+      case SettingTypes.askedQuestion:
+        navigation.navigate('Questions');
+        break;
+      case SettingTypes.termOfService:
+        navigation.navigate('About', {
+          url: html.termAndCondition,
+        });
+        break;
+      case SettingTypes.privacyPolicy:
+        navigation.navigate('About', {
+          url: html.privacyPolicy,
+        });
+        break;
+      case SettingTypes.frequentlyAskedQuestion:
+        navigation.navigate('About', {
+          url: html.faq,
+        });
+        break;
+      default:
+        return () => {};
+    }
+  };
 
   const renderItem = ({item}: any) => {
     return (
       <Box margin="s">
         <TouchableOpacity
-          onPress={() => navigation.navigate('About')}
+          onPress={() => routes(item.navigateIdentifier)}
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -65,20 +98,18 @@ const GroupList = ({navigation}: any) => {
 
   return (
     <Box padding="m" width={width} justifyContent="center">
-      <Box borderColor="background2" borderRadius="l" borderWidth={0.5}>
-        <SectionList
-          sections={sectionList}
-          renderSectionHeader={({section}: any) => (
-            <Box alignItems="center">
-              <Text variant="title2" marginVertical="m" color="background2">
-                {section.title}
-              </Text>
-            </Box>
-          )}
-          renderItem={renderItem}
-          keyExtractor={(index: any) => index.toString()}
-        />
-      </Box>
+      <SectionList
+        sections={settingSectionList}
+        renderSectionHeader={({section}: any) => (
+          <Box alignItems="center">
+            <Text variant="title2" marginVertical="m" color="background2">
+              {section.title}
+            </Text>
+          </Box>
+        )}
+        renderItem={renderItem}
+        keyExtractor={(index: any) => index.toString()}
+      />
     </Box>
   );
 };

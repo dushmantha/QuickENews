@@ -3,7 +3,6 @@ import auth from '@react-native-firebase/auth';
 import {
   Dimensions,
   ScrollView,
-  Switch,
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
@@ -12,9 +11,10 @@ import Icon from 'react-native-vector-icons/Feather';
 import {CommonActions} from '@react-navigation/native';
 import {Text, Box, useTheme, Size} from '../../components';
 import {HomeNavigationProps} from '../../components/Navigation';
-const {width} = Dimensions.get('window');
 import {NavigationBar} from '../components';
 import GroupList from './GroupList';
+
+const {width} = Dimensions.get('window');
 
 const Setting = ({navigation}: HomeNavigationProps<'Setting'>) => {
   const theme = useTheme();
@@ -22,13 +22,7 @@ const Setting = ({navigation}: HomeNavigationProps<'Setting'>) => {
 
   const renderHeaderView = () => {
     return (
-      <Box
-        flex={1}
-        justifyContent="flex-start"
-        marginVertical="m"
-        borderColor="white"
-        borderRadius="l"
-        borderWidth={0.5}>
+      <Box flex={1} justifyContent="flex-start" marginVertical="m">
         <Text
           variant="title1"
           color="white"
@@ -87,59 +81,6 @@ const Setting = ({navigation}: HomeNavigationProps<'Setting'>) => {
       </Box>
     );
   };
-
-  // const renderBottonView = () => {
-  //   return (
-  //     <Box padding="s" width={width - 50} justifyContent="center">
-  //       <Box alignItems="center">
-  //         <Text variant="title2" marginVertical="m">
-  //           Settings
-  //         </Text>
-  //       </Box>
-  //       <Box borderColor="background2" borderRadius="s" borderWidth={0.5}>
-  //         <Box margin="s" alignContent="center">
-  //           <Box
-  //             flexDirection="row"
-  //             alignItems="center"
-  //             alignContent="center"
-  //             justifyContent="space-between"
-  //             height={60}>
-  //             <Text variant="body2">Push Notification On</Text>
-  //             <Switch
-  //               trackColor={{
-  //                 true: theme.colors.background2,
-  //                 false: theme.colors.lightGray,
-  //               }}
-  //               onValueChange={() => {}}
-  //               value={false}></Switch>
-  //           </Box>
-  //           <Box
-  //             flexDirection="row"
-  //             alignItems="center"
-  //             alignContent="center"
-  //             justifyContent="space-between"
-  //             height={60}>
-  //             <Text variant="body2">Video auto play</Text>
-  //             <Switch
-  //               trackColor={{
-  //                 true: theme.colors.background2,
-  //                 false: theme.colors.lightGray,
-  //               }}
-  //               onValueChange={() => {}}
-  //               value={false}></Switch>
-  //           </Box>
-  //         </Box>
-  //         <TouchableOpacity
-  //           onPress={() => {}}
-  //           style={{marginBottom: Size.paddings.s}}>
-  //           <Text variant="title3" color="background2" textAlign="center">
-  //             Term and condition
-  //           </Text>
-  //         </TouchableOpacity>
-  //       </Box>
-  //     </Box>
-  //   );
-  // };
 
   return (
     <SafeAreaView

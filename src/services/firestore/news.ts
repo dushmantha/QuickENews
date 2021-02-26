@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
+import {News} from '../../types';
 
 const useNewsList = () => {
   // const [news, setNews] = useState<any>([]);
@@ -49,7 +50,7 @@ const useNewsList = () => {
         console.log('Error getting documents', err);
       });
   }, []);
-  return news;
+  return news as [News];
 };
 
 const useBreakingNews = () => {
@@ -69,7 +70,7 @@ const useBreakingNews = () => {
         console.log('Error getting documents', err);
       });
   }, []);
-  return news;
+  return news as [News];
 };
 
 export {useNewsList, useBreakingNews};

@@ -1,12 +1,14 @@
 import {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-const setBookmark = (news: Object, userEmail: string) => {
+import {News} from '../../types';
+const user = auth().currentUser;
+const setBookmark = (news: Object) => {
   firestore()
     .collection('Bookmark')
     .add({
       news: news,
-      userEmail: userEmail,
+      userEmail: user && user.email,
     })
     .then(() => {
       console.log('Boomark added!');
@@ -18,15 +20,15 @@ const useGetBookmark = () => {
   useEffect(() => {
     firestore()
       .collection('Bookmark')
-      .where('userEmail', '==', 'tdmihiran@gmail.com')
+      .where('userEmail', '==', user && user.email)
       .onSnapshot((snapshot) => {
         const snapshotDocs = snapshot.docs.map((doc) => {
           return doc.data().news;
         });
         setNews(snapshotDocs);
       });
-  }, []);
-  return news;
+  });
+  return news as [News];
 };
 
 export {setBookmark, useGetBookmark};

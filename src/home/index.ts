@@ -3,7 +3,7 @@ import News from './news/News';
 import Setting from './setting/Setting';
 import Bookmark from './bookmark/Bookmark';
 import About from './setting/About';
-import Support from './setting/Support';
+import Questions from './setting/Questions';
 import AutoPlay from './setting/Autoplay';
 import DataUsage from './setting/DataUsage';
 import DisplaySetting from './setting/DisplaySetting';
@@ -15,7 +15,7 @@ export {
   Setting,
   Bookmark,
   About,
-  Support,
+  Questions,
   AutoPlay,
   DataUsage,
   DisplaySetting,

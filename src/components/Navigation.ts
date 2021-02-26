@@ -32,7 +32,7 @@ export type HomeRoutes = {
   News: undefined;
   Setting: undefined;
   Bookmark: undefined;
-  ArticleDetails: undefined;
+  ArticleDetails: any;
   PushNotification: undefined;
   DisplaySetting: undefined;
   DataUsage: undefined;

@@ -5,14 +5,13 @@ import Animated, {Extrapolate, interpolateNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
-
 import {Text, Box, useTheme, Size} from '../../components';
+import {News} from '../../types';
 import {NavigationBar, NewsList} from '../components';
-import {allArticles} from '../../data/test/sampleData';
+import {useNewsList} from '../../services/';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import {MIN_HEADER_HEIGHT} from './Header';
-
-const profile = require('./assets/profile.jpg');
+import profileImage from './assets/profile.png';
 
 export interface TabModel {
   name: string;
@@ -24,9 +23,10 @@ interface ContentProps {
   y: Animated.Node<number>;
   onMeasurement: (index: number, tab: TabModel) => void;
   navigation: any;
+  news: News;
 }
 
-export default ({y, navigation}: ContentProps) => {
+export default ({y, navigation, news}: ContentProps) => {
   const theme = useTheme();
   const opacity = interpolateNode(y, {
     inputRange: [
@@ -42,12 +42,18 @@ export default ({y, navigation}: ContentProps) => {
       <Animated.View style={[styles.section, {opacity}]}>
         <Box flexDirection="row" alignItems="center">
           <Animated.Image
-            source={profile}
-            style={{width: 60, height: 60, borderRadius: 30}}
+            source={
+              news.authorProfileImageUrl
+                ? {uri: news.authorProfileImageUrl}
+                : profileImage
+            }
+            style={{width: 50, height: 50, borderRadius: 30}}
           />
-          <Text marginStart="m" variant="title3" color="background2">
-            George Boyle
-          </Text>
+          <Box marginLeft="m" flex={1}>
+            <Text variant="title3" color="background2">
+              {news.authorName}
+            </Text>
+          </Box>
         </Box>
         <Box
           flexDirection="row"
@@ -72,7 +78,7 @@ export default ({y, navigation}: ContentProps) => {
           alignItems="center"
           marginTop="s">
           <Text variant="body2" color="background2">
-            @twitter
+            @author-twitter
           </Text>
         </Box>
         <Box
@@ -81,12 +87,12 @@ export default ({y, navigation}: ContentProps) => {
           alignItems="center"
           marginTop="s">
           <Text variant="body2" color="background2">
-            george@gmail.com
+            @author-mail
           </Text>
         </Box>
       </Animated.View>
       <Text marginBottom="l" marginHorizontal="m" variant="body">
-        {allArticles.articles[0].description}
+        {news.description}
       </Text>
       <Box paddingVertical="m" alignItems="center">
         <Banner bannerAdSize={BannerAdSize.MEDIUM_RECTANGLE as any} />
@@ -118,7 +124,7 @@ const RecommendedNews = ({navigation}: {navigation: any}) => {
           <Box>
             <NewsList
               navigation={navigation}
-              news={allArticles}
+              news={useNewsList() as [News]}
               isBookmark={false}
             />
           </Box>

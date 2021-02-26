@@ -13,7 +13,7 @@ import {Images} from '../assets';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
 import {newsCategory} from '../../data/test/sampleData';
-
+import {News as NewsType} from '../../types';
 import {NavigationBar, NewsList} from '../components';
 import {useNewsList, useBreakingNews} from '../../services/';
 
@@ -32,10 +32,9 @@ const BreakingNewsSection = ({navigation}: any) => {
             paddingHorizontal: Size.paddings.s,
           }}
           onPress={() =>
-            // navigation.navigate("ArticleDetails", {
-            //   news: item,
-            // })
-            navigation.navigate('ArticleDetails')
+            navigation.navigate('ArticleDetails', {
+              news: item,
+            })
           }>
           <FastImage
             source={{
@@ -157,7 +156,7 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
           <Box>
             <NewsList
               navigation={navigation}
-              news={useNewsList()}
+              news={useNewsList() as [NewsType]}
               isBookmark={false}
             />
           </Box>

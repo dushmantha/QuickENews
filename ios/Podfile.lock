@@ -709,6 +709,8 @@ PODS:
     - React-jsi (= 0.63.4)
   - RNCMaskedView (0.1.10):
     - React
+  - RNDeviceInfo (8.0.1):
+    - React-Core
   - RNFastImage (8.3.4):
     - React-Core
     - SDWebImage (~> 5.8)
@@ -838,6 +840,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBAdMob (from `../node_modules/@react-native-firebase/admob`)"
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
@@ -959,6 +962,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
   RNFBAdMob:
@@ -1059,6 +1064,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
+  RNDeviceInfo: 54401b60514387f9120ab8265be5ed9103d842b9
   RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
   RNFBAdMob: 11365dcc37bcadea3afcdf04e1b82906a501d3b6
   RNFBAnalytics: 454b17745d3824156cb906e2777d85f6848bf3e1

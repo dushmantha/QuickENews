@@ -15,22 +15,20 @@ const styles = StyleSheet.create({
 
 const ArticleDetails = ({
   navigation,
+  route,
 }: HomeNavigationProps<'ArticleDetails'>) => {
   const goBack = () => {
     navigation.goBack();
   };
+  const {news} = route.params;
   const scrollView = useRef<Animated.ScrollView>(null);
   const [tabs, setTabs] = useState([].map(() => ({anchor: 0})));
-  const tabModel: TabModel = {
-    anchor: 0,
-    name: 'user name',
-    profile: '',
-  };
+
   const y = useValue(0);
   const onScroll = onScrollEvent({y});
   return (
     <View style={styles.container}>
-      <HeaderImage {...{y}} />
+      <HeaderImage {...{y, news}} />
       <Animated.ScrollView
         ref={scrollView}
         style={StyleSheet.absoluteFill}
@@ -42,10 +40,10 @@ const ArticleDetails = ({
             tabs[index] = tab;
             setTabs([...tabs]);
           }}
-          {...{y, navigation}}
+          {...{y, navigation, news}}
         />
       </Animated.ScrollView>
-      <Header {...{y, tabModel, goBack}} />
+      <Header {...{y, goBack, news}} />
     </View>
   );
 };

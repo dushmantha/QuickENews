@@ -4,6 +4,17 @@
 <dict>
   <key>GADApplicationIdentifier</key>
   <string>ca-app-pub-7757836269117697~3839762761</string>
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+      <string>message</string>
+      <string>readdle-spark</string>
+      <string>airmail</string>
+      <string>ms-outlook</string>
+      <string>googlegmail</string>
+      <string>inbox-gmail</string>
+      <string>ymail</string>
+      <string>superhuman</string>
+  </array>
   <key>CFBundleURLTypes</key>
   <array>
     <dict>
