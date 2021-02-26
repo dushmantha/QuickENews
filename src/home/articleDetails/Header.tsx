@@ -8,6 +8,7 @@ import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import TabHeader from './TabHeader';
 import {Box, useTheme, Size} from '../../components';
 import {News} from '../../types';
+import {setBookmark} from '../../services/';
 
 const ICON_SIZE = 24;
 const PADDING = 16;
@@ -100,7 +101,7 @@ export default ({y, goBack, news}: HeaderProps) => {
           {news.title}
         </Animated.Text>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => setBookmark(news)}
           style={{marginTop: -statusBarHeight}}>
           <Icon name="bookmark" size={ICON_SIZE} color="white" />
           <Animated.View
