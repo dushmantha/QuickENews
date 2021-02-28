@@ -73,4 +73,24 @@ const useBreakingNews = () => {
   return news as [News];
 };
 
-export {useNewsList, useBreakingNews};
+const useNewsGetByCategory = (category: string) => {
+  const [news, setNews] = useState<any>([]);
+  useEffect(() => {
+    firestore()
+      .collection('NewsList')
+      .where('category', '==', category)
+      .get()
+      .then((snapshot) => {
+        const snapshotDocs = snapshot.docs.map((doc) => {
+          return doc.data();
+        });
+        setNews(snapshotDocs);
+      })
+      .catch((err) => {
+        console.log('Error getting documents', err);
+      });
+  }, [category]);
+  return news as [News];
+};
+
+export {useNewsList, useBreakingNews, useNewsGetByCategory};

@@ -454,27 +454,39 @@ const allArticles = {
 const newsCategory = [
   {
     name: 'Business',
-    id: 1,
+    tag: 'business',
   },
   {
     name: 'Technology',
-    id: 2,
+    tag: 'technology',
   },
   {
     name: 'Science',
-    id: 3,
+    tag: 'science',
+  },
+  {
+    name: 'General',
+    tag: 'general',
   },
   {
     name: 'Art',
-    id: 4,
+    tag: 'art',
+  },
+  {
+    name: 'Health',
+    tag: 'health',
+  },
+  {
+    name: 'Sport',
+    tag: 'sport',
   },
   {
     name: 'Entertainment',
-    id: 5,
+    tag: 'entertainment',
   },
   {
     name: 'Politics',
-    id: 6,
+    tag: 'Politics',
   },
 ];
 

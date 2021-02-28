@@ -9,10 +9,9 @@ import {News} from '../../types';
 type NewsListProps = {
   news: [News];
   navigation: any;
-  isBookmark: Boolean;
 };
 
-const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
+const NewsList = ({news, navigation}: NewsListProps) => {
   const renderItem = ({item, index}: {item: News; index: number}) => {
     return (
       <Box alignItems="center">
@@ -63,11 +62,6 @@ const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
 
   return (
     <Box flex={1} marginTop="m" marginHorizontal="m" paddingBottom="m">
-      {!isBookmark && (
-        <Box alignItems="center">
-          <Banner bannerAdSize={BannerAdSize.BANNER as any} />
-        </Box>
-      )}
       <FlatList
         keyExtractor={(_, index) => index.toString()}
         data={news}

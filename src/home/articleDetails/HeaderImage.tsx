@@ -6,6 +6,7 @@ const {Extrapolate, interpolateNode} = Animated;
 const {height: wHeight, width: wWidth} = Dimensions.get('window');
 import {News} from '../../types';
 
+export const HEADER_IMAGE_WIDTH = wWidth;
 export const HEADER_IMAGE_HEIGHT = wHeight / 3;
 const styles = StyleSheet.create({
   image: {
@@ -23,6 +24,7 @@ interface HeaderImageProps {
 }
 
 export default ({y, news}: HeaderImageProps) => {
+  console.log('print -----', y);
   const height = interpolateNode(y, {
     inputRange: [-100, 0],
     outputRange: [HEADER_IMAGE_HEIGHT + 100, HEADER_IMAGE_HEIGHT],

@@ -1,9 +1,10 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {withTimingTransition, useValue} from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Feather';
-// import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {isIphoneX} from 'react-native-iphone-x-helper';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import TabHeader from './TabHeader';
 import {Box, useTheme, Size} from '../../components';
@@ -41,19 +42,19 @@ export default ({y, goBack, news}: HeaderProps) => {
   const theme = useTheme();
   const toggle = useValue<0 | 1>(0);
   const transition = withTimingTransition(toggle, {duration: 100});
-  // const insets = useSafeAreaInsets();
-  // const {top: paddingTop} = insets;
-  const statusBarHeight = 54;
+  const insets = useSafeAreaInsets();
+  const {top: paddingTop} = insets;
   const translateX = interpolateNode(y, {
     inputRange: [0, HEADER_IMAGE_HEIGHT],
     outputRange: [-ICON_SIZE - PADDING, 0],
     extrapolate: Extrapolate.CLAMP,
   });
+  const headerHeight = isIphoneX() ? 10 : 50;
   const translateY = interpolateNode(y, {
     inputRange: [-100, 0, HEADER_IMAGE_HEIGHT],
     outputRange: [
       HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT + 100,
-      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT,
+      HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT + headerHeight,
       -10,
     ],
     extrapolateRight: Extrapolate.CLAMP,
@@ -64,7 +65,7 @@ export default ({y, goBack, news}: HeaderProps) => {
     y,
   ]);
   return (
-    <Animated.View style={[styles.container, {paddingTop: statusBarHeight}]}>
+    <Animated.View style={[styles.container, {paddingTop}]}>
       <Animated.View
         style={{
           ...StyleSheet.absoluteFillObject,
@@ -77,9 +78,7 @@ export default ({y, goBack, news}: HeaderProps) => {
         height={MIN_HEADER_HEIGHT}
         alignItems="center"
         paddingHorizontal="l">
-        <TouchableOpacity
-          onPress={goBack}
-          style={{marginTop: -statusBarHeight}}>
+        <TouchableOpacity onPress={goBack}>
           <Icon name="arrow-left" size={ICON_SIZE} color="white" />
           <Animated.View
             style={{...StyleSheet.absoluteFillObject, opacity: transition}}>
@@ -100,9 +99,7 @@ export default ({y, goBack, news}: HeaderProps) => {
           ]}>
           {news.title}
         </Animated.Text>
-        <TouchableOpacity
-          onPress={() => setBookmark(news)}
-          style={{marginTop: -statusBarHeight}}>
+        <TouchableOpacity onPress={() => setBookmark(news)}>
           <Icon name="bookmark" size={ICON_SIZE} color="white" />
           <Animated.View
             style={{...StyleSheet.absoluteFillObject, opacity: transition}}>

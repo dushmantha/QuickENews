@@ -32,11 +32,7 @@ const Bookmark = ({navigation}: HomeNavigationProps<'Bookmark'>) => {
           showsVerticalScrollIndicator={false}>
           {/* News list Section */}
           <Box>
-            <NewsList
-              navigation={navigation}
-              news={useGetBookmark()}
-              isBookmark={true}
-            />
+            <NewsList navigation={navigation} news={useGetBookmark()} />
           </Box>
         </ScrollView>
       </Box>

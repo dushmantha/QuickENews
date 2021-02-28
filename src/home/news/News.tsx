@@ -15,7 +15,7 @@ import {Banner} from '../../ads/';
 import {newsCategory} from '../../data/test/sampleData';
 import {News as NewsType} from '../../types';
 import {NavigationBar, NewsList} from '../components';
-import {useNewsList, useBreakingNews} from '../../services/';
+import {useNewsGetByCategory, useBreakingNews} from '../../services/';
 
 const BreakingNewsSection = ({navigation}: any) => {
   const renderItem = ({item, index}: any) => {
@@ -87,16 +87,15 @@ const BreakingNewsSection = ({navigation}: any) => {
 
 const News = ({navigation}: HomeNavigationProps<'News'>) => {
   const theme = useTheme();
-  const [selectedCategory, setSelectedCategory] = useState(1);
-  const [categories, setCategories] = useState(newsCategory);
+  const [selectedCategory, setSelectedCategory] = useState('business');
 
   const categoryHeaders = () => {
     const renderItem = ({item}: any) => {
       return (
         <TouchableOpacity
           style={{flex: 1, marginRight: Size.paddings.l}}
-          onPress={() => setSelectedCategory(item.id)}>
-          {selectedCategory == item.id ? (
+          onPress={() => setSelectedCategory(item.tag)}>
+          {selectedCategory === item.tag ? (
             <Text variant="title2" color="background2">
               {item.name}
             </Text>
@@ -112,7 +111,7 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
     return (
       <Box flex={1} paddingLeft="l">
         <FlatList
-          data={categories}
+          data={newsCategory}
           showsHorizontalScrollIndicator={false}
           renderItem={renderItem}
           keyExtractor={(_, index) => index.toString()}
@@ -156,8 +155,9 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
           <Box>
             <NewsList
               navigation={navigation}
-              news={useNewsList() as [NewsType]}
-              isBookmark={false}
+              news={
+                useNewsGetByCategory(selectedCategory as string) as [NewsType]
+              }
             />
           </Box>
         </ScrollView>

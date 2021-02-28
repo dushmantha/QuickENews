@@ -1,14 +1,14 @@
 /* eslint-disable max-len */
 import React from 'react';
-import {StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import Animated, {Extrapolate, interpolateNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
-import {Text, Box, useTheme, Size} from '../../components';
+import {Text, Box, useTheme} from '../../components';
 import {News} from '../../types';
 import {NavigationBar, NewsList} from '../components';
-import {useNewsList} from '../../services/';
+import {useNewsGetByCategory} from '../../services/';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import {MIN_HEADER_HEIGHT} from './Header';
 import profileImage from './assets/profile.png';
@@ -21,7 +21,6 @@ export interface TabModel {
 
 interface ContentProps {
   y: Animated.Node<number>;
-  onMeasurement: (index: number, tab: TabModel) => void;
   navigation: any;
   news: News;
 }
@@ -98,13 +97,13 @@ export default ({y, navigation, news}: ContentProps) => {
         <Banner bannerAdSize={BannerAdSize.MEDIUM_RECTANGLE as any} />
       </Box>
       <Box marginVertical="l">
-        <RecommendedNews navigation={navigation} />
+        <RecommendedNews navigation={navigation} news={news} />
       </Box>
     </Box>
   );
 };
 
-const RecommendedNews = ({navigation}: {navigation: any}) => {
+const RecommendedNews = ({navigation, news}: {navigation: any; news: News}) => {
   const theme = useTheme();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.colors.background}}>
@@ -112,23 +111,12 @@ const RecommendedNews = ({navigation}: {navigation: any}) => {
         <Box height={70}>
           <NavigationBar title="Recommended News" />
         </Box>
-        {/* body section */}
-        <ScrollView
-          style={{
-            paddingVertical: Size.paddings.l,
-            backgroundColor: theme.colors.background,
-            flex: 1,
-          }}
-          showsVerticalScrollIndicator={false}>
-          {/* News list Section */}
-          <Box>
-            <NewsList
-              navigation={navigation}
-              news={useNewsList() as [News]}
-              isBookmark={false}
-            />
-          </Box>
-        </ScrollView>
+        <Box>
+          <NewsList
+            navigation={navigation}
+            news={useNewsGetByCategory(news.category) as [News]}
+          />
+        </Box>
       </Box>
     </SafeAreaView>
   );
