@@ -3,7 +3,7 @@ import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import {Box, useTheme, Size} from '../../components';
 import {HomeNavigationProps} from '../../components/Navigation';
 import {NavigationBar, NewsList} from '../components';
-import {useGetBookmark} from '../../services/';
+import {useGetBookmark} from '../../services';
 const Bookmark = ({navigation}: HomeNavigationProps<'Bookmark'>) => {
   const theme = useTheme();
   return (
@@ -32,7 +32,10 @@ const Bookmark = ({navigation}: HomeNavigationProps<'Bookmark'>) => {
           showsVerticalScrollIndicator={false}>
           {/* News list Section */}
           <Box>
-            <NewsList navigation={navigation} news={useGetBookmark()} />
+            <NewsList
+              navigation={navigation}
+              news={useGetBookmark().map(({news}) => news)}
+            />
           </Box>
         </ScrollView>
       </Box>

@@ -1,14 +1,15 @@
 /* eslint-disable max-len */
 import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {StyleSheet, SafeAreaView, useWindowDimensions} from 'react-native';
 import Animated, {Extrapolate, interpolateNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
 import {BannerAdSize} from '@react-native-firebase/admob';
+import HTML from 'react-native-render-html';
 import {Banner} from '../../ads/';
 import {Text, Box, useTheme} from '../../components';
 import {News} from '../../types';
 import {NavigationBar, NewsList} from '../components';
-import {useNewsGetByCategory} from '../../services/';
+import {useNewsGetByCategory} from '../../services';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import {MIN_HEADER_HEIGHT} from './Header';
 import profileImage from './assets/profile.png';
@@ -27,6 +28,7 @@ interface ContentProps {
 
 export default ({y, navigation, news}: ContentProps) => {
   const theme = useTheme();
+  const contentWidth = useWindowDimensions().width;
   const opacity = interpolateNode(y, {
     inputRange: [
       HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT,
@@ -50,49 +52,56 @@ export default ({y, navigation, news}: ContentProps) => {
           />
           <Box marginLeft="m" flex={1}>
             <Text variant="title3" color="background2">
-              {news.authorName}
+              {news.author_name}
             </Text>
           </Box>
         </Box>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginTop="s">
-          <Text variant="body" color="background2">
-            Attached pdf here
-          </Text>
-          <Box flexDirection="row" alignItems="center">
-            <Icon
-              name="paperclip"
-              color={theme.colors.background2}
-              size={20}
-              style={styles.icon}
-            />
+        {news.attachment && (
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s">
+            <Text variant="body" color="background2">
+              {news.attachment}
+            </Text>
+            <Box flexDirection="row" alignItems="center">
+              <Icon
+                name="paperclip"
+                color={theme.colors.background2}
+                size={20}
+                style={styles.icon}
+              />
+            </Box>
           </Box>
-        </Box>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginTop="s">
-          <Text variant="body2" color="background2">
-            @author-twitter
-          </Text>
-        </Box>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginTop="s">
-          <Text variant="body2" color="background2">
-            @author-mail
-          </Text>
-        </Box>
+        )}
+        {news.author_twitter && (
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s">
+            <Text variant="body2" color="background2">
+              {news.author_twitter}
+            </Text>
+          </Box>
+        )}
+        {news.author_emails && (
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s">
+            <Text variant="body2" color="background2">
+              {news.author_emails}
+            </Text>
+          </Box>
+        )}
       </Animated.View>
-      <Text marginBottom="l" marginHorizontal="m" variant="body">
-        {news.description}
-      </Text>
+      <Box marginBottom="l" marginHorizontal="m">
+        <HTML source={{html: news.description}} contentWidth={contentWidth} />
+      </Box>
+
       <Box paddingVertical="m" alignItems="center">
         <Banner bannerAdSize={BannerAdSize.MEDIUM_RECTANGLE as any} />
       </Box>
@@ -114,7 +123,7 @@ const RecommendedNews = ({navigation, news}: {navigation: any; news: News}) => {
         <Box>
           <NewsList
             navigation={navigation}
-            news={useNewsGetByCategory(news.category) as [News]}
+            news={useNewsGetByCategory(news.category_id) as [News]}
           />
         </Box>
       </Box>

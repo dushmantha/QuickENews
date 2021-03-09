@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
-import {News} from '../../types';
+import {News} from '../types';
 
+const db = firestore().collection('products');
 const useNewsList = () => {
   // const [news, setNews] = useState<any>([]);
   // useEffect(() => {
@@ -36,12 +37,11 @@ const useNewsList = () => {
 
   const [news, setNews] = useState<any>([]);
   useEffect(() => {
-    firestore()
-      .collection('NewsList')
-      .limit(25)
+    db.limit(25)
       .get()
       .then((snapshot) => {
         const snapshotDocs = snapshot.docs.map((doc) => {
+          doc.data()._id = doc.id;
           return doc.data();
         });
         setNews(snapshotDocs);
@@ -56,14 +56,14 @@ const useNewsList = () => {
 const useBreakingNews = () => {
   const [news, setNews] = useState<any>([]);
   useEffect(() => {
-    firestore()
-      .collection('NewsList')
-      .where('category', '==', 'technology')
+    db.where('category_id', '==', '11')
       .get()
       .then((snapshot) => {
         const snapshotDocs = snapshot.docs.map((doc) => {
+          doc.data()._id = doc.id;
           return doc.data();
         });
+
         setNews(snapshotDocs);
       })
       .catch((err) => {
@@ -76,12 +76,11 @@ const useBreakingNews = () => {
 const useNewsGetByCategory = (category: string) => {
   const [news, setNews] = useState<any>([]);
   useEffect(() => {
-    firestore()
-      .collection('NewsList')
-      .where('category', '==', category)
+    db.where('category_id', '==', category)
       .get()
       .then((snapshot) => {
         const snapshotDocs = snapshot.docs.map((doc) => {
+          doc.data()._id = doc.id;
           return doc.data();
         });
         setNews(snapshotDocs);

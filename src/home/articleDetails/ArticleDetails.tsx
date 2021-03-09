@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {onScrollEvent, useValue} from 'react-native-redash';
@@ -20,7 +20,7 @@ const ArticleDetails = ({
   const goBack = () => {
     navigation.goBack();
   };
-  const {news} = route.params;
+  const {news}: any = route.params;
   const scrollView = useRef<Animated.ScrollView>(null);
 
   const y = useValue(0);

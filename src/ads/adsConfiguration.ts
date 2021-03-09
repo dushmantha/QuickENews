@@ -42,4 +42,4 @@ const useAddConfig = () => {
   return state;
 };
 
-export {adsRequestConfiguration, useAddConfig};
+export {useAddConfig};

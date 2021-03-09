@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {withTimingTransition, useValue} from 'react-native-redash';
 import Icon from 'react-native-vector-icons/Feather';
@@ -9,7 +9,8 @@ import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import TabHeader from './TabHeader';
 import {Box, useTheme, Size} from '../../components';
 import {News} from '../../types';
-import {setBookmark} from '../../services/';
+import {setBookmark, useGetBookmark, deleteBookmark} from '../../services';
+import bookmarked from './assets/bookmarked.png';
 
 const ICON_SIZE = 24;
 const PADDING = 16;
@@ -64,6 +65,15 @@ export default ({y, goBack, news}: HeaderProps) => {
     toggle,
     y,
   ]);
+  const [bookmarkNews, setBookmarkNews] = useState(false);
+  let obj = useGetBookmark().find((o: any) => o.news._id === news._id);
+  useEffect(() => {
+    setBookmarkNews(obj ? true : false);
+  }, [obj]);
+  const clickBookmark = () => {
+    obj && bookmarkNews ? deleteBookmark(obj._id) : setBookmark(news);
+    setBookmarkNews(!bookmarkNews);
+  };
   return (
     <Animated.View style={[styles.container, {paddingTop}]}>
       <Animated.View
@@ -99,8 +109,14 @@ export default ({y, goBack, news}: HeaderProps) => {
           ]}>
           {news.title}
         </Animated.Text>
-        <TouchableOpacity onPress={() => setBookmark(news)}>
-          <Icon name="bookmark" size={ICON_SIZE} color="white" />
+        <TouchableOpacity onPress={clickBookmark}>
+          <Box height={25} width={25}>
+            {bookmarkNews ? (
+              <Image style={{width: 25, height: 25}} source={bookmarked} />
+            ) : (
+              <Icon name="bookmark" size={ICON_SIZE} color="white" />
+            )}
+          </Box>
           <Animated.View
             style={{...StyleSheet.absoluteFillObject, opacity: transition}}>
             <Icon name="bookmark" size={ICON_SIZE} color="black" />

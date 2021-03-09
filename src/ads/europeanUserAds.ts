@@ -1,4 +1,3 @@
-import {createContext} from 'react';
 import {
   AdsConsent,
   AdsConsentStatus,
@@ -35,6 +34,4 @@ const europeanUserAds = async () => {
   }
 };
 
-const AdConsentContext = createContext(1);
-
-export {europeanUserAds, AdConsentContext};
+export {europeanUserAds};

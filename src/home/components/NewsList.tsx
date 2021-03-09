@@ -7,7 +7,7 @@ import {Text, Box} from '../../components';
 import {News} from '../../types';
 
 type NewsListProps = {
-  news: [News];
+  news: News[];
   navigation: any;
 };
 
@@ -31,7 +31,7 @@ const NewsList = ({news, navigation}: NewsListProps) => {
               }>
               <FastImage
                 source={{
-                  uri: item.urlToImage && item.urlToImage,
+                  uri: item.image && item.image.src,
                   priority: FastImage.priority.normal,
                 }}
                 resizeMode="cover"
@@ -40,17 +40,17 @@ const NewsList = ({news, navigation}: NewsListProps) => {
 
               <Box flex={1} marginLeft="m">
                 <Box paddingRight="l">
-                  <Text variant="title3" color="background2">
+                  <Text variant="title3" color="background2" numberOfLines={2}>
                     {item.title}
                   </Text>
-                  <Text variant="title3" color="lightGray" marginTop="s">
-                    {item.authorName && item.authorName}
-                  </Text>
+                  {item.author_name && (
+                    <Text variant="title3" color="lightGray" marginVertical="s">
+                      {item.author_name}
+                    </Text>
+                  )}
                 </Box>
-                <Box flexDirection="row" marginTop="s">
-                  <Text variant="body4" color="grayFont" numberOfLines={4}>
-                    {item.description}
-                  </Text>
+                <Box flexDirection="row">
+                  <Text numberOfLines={4}>{item.description}</Text>
                 </Box>
               </Box>
             </TouchableOpacity>

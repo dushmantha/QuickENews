@@ -1,4 +1,5 @@
 export type News = {
+  _id: string;
   /**
    * - The news title.
    */
@@ -6,7 +7,7 @@ export type News = {
   /**
    * - The author name.
    */
-  authorName: string;
+  author_name: string;
   /**
    * - The author profile url (if available).
    */
@@ -14,15 +15,15 @@ export type News = {
   /**
    * - The author email (if available).
    */
-  authorEmails: string;
+  author_emails: string;
   /**
    * - The author Twitter profile (if available).
    */
-  authorTwitter: string;
+  author_twitter: string;
   /**
    * - The author ranking 1-5 (if available).
    */
-  authorRanking: string;
+  author_ranking: string;
   /**
    * - User should pay for this article for read
    */
@@ -34,7 +35,9 @@ export type News = {
   /**
    * - Header image url
    */
-  urlToImage: string;
+  image: {
+    src: string;
+  };
   /**
    * - Header video url
    */
@@ -46,9 +49,11 @@ export type News = {
   /**
    * - Category of article
    */
-  category: string;
+  category_id: string;
   /**
    * - The article publish date
    */
-  publishedAt: string;
+  published_at: string;
+
+  attachment: string;
 };

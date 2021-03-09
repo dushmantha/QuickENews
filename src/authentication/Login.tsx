@@ -1,14 +1,15 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {TextInput as RNTextInput, TouchableOpacity} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {CommonActions} from '@react-navigation/native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import auth from '@react-native-firebase/auth';
-import {Container, Button, Text, Box} from '../components';
+import {Container, Button, Text, Box, useTheme} from '../components';
 import {AuthNavigationProps} from '../components/Navigation';
 import TextInput from '../components/Form/TextInput';
 import Checkbox from '../components/Form/Checkbox';
-
+import {getUser} from '../services/';
 import Footer from './components/Footer';
 
 const LoginSchema = Yup.object().shape({
@@ -20,6 +21,8 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = ({navigation}: AuthNavigationProps<'Login'>) => {
+  const [spinner, setSpinner] = useState(false);
+  const theme = useTheme();
   const {
     handleChange,
     handleBlur,
@@ -32,10 +35,12 @@ const Login = ({navigation}: AuthNavigationProps<'Login'>) => {
     validationSchema: LoginSchema,
     initialValues: {email: '', password: '', remember: true},
     onSubmit: () => {
+      setSpinner(true);
       auth()
         .signInWithEmailAndPassword(values.email, values.password)
+        .then(() => getUser(values.email))
         .then(() => {
-          console.log('User account created & signed in!');
+          setSpinner(false);
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
@@ -44,6 +49,7 @@ const Login = ({navigation}: AuthNavigationProps<'Login'>) => {
           );
         })
         .catch((error) => {
+          setSpinner(false);
           if (error.code === 'auth/email-already-in-use') {
             console.log('That email address is already in use!');
           }
@@ -124,6 +130,11 @@ const Login = ({navigation}: AuthNavigationProps<'Login'>) => {
           <Button onPress={handleSubmit} label="Log into your account" />
         </Box>
       </Box>
+      <Spinner
+        visible={spinner}
+        textContent={'Loading...'}
+        textStyle={{color: theme.colors.background2}}
+      />
     </Container>
   );
 };

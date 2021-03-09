@@ -7,8 +7,9 @@ import {
   TestIds,
   AdsConsentStatus,
 } from '@react-native-firebase/admob';
-import {Platform, Button} from 'react-native';
-import {AdConsentContext} from './europeanUserAds';
+import {Platform} from 'react-native';
+import {Button, Box} from '../components';
+import {AdConsentContext, AdEnabledContext} from './';
 const adBannerUnitId = __DEV__
   ? TestIds.BANNER
   : Platform.OS === 'android'
@@ -23,36 +24,41 @@ const adRewardedUnitId = __DEV__
 
 const Banner = (size: {bannerAdSize: FirebaseAdMobTypes.BannerAdSize}) => {
   const status = useContext(AdConsentContext);
+  const enabled = useContext(AdEnabledContext);
   console.log('When an ad has finished loading', adRewardedUnitId);
   return (
-    <BannerAd
-      unitId={adBannerUnitId}
-      size={size.bannerAdSize}
-      // size={bannerAdSize.FULL_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly:
-          status === AdsConsentStatus.NON_PERSONALIZED,
-        // requestNonPersonalizedAdsOnly: true,
-      }}
-      onAdLoaded={() => {
-        console.log('When an ad has finished loading');
-        /**
-         * When an ad has finished loading..
-         */
-      }}
-      onAdFailedToLoad={(err) => {
-        console.log(
-          'When an ad has failed to load. Callback contains an Error',
-          err,
-        );
-        /**
-         * The ad is now visible to the user.
-         */
-      }}
-      onAdOpened={() => {}}
-      onAdClosed={() => {}}
-      onAdLeftApplication={() => {}}
-    />
+    <Box>
+      {enabled && (
+        <BannerAd
+          unitId={adBannerUnitId}
+          size={size.bannerAdSize}
+          // size={bannerAdSize.FULL_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly:
+              status === AdsConsentStatus.NON_PERSONALIZED,
+            // requestNonPersonalizedAdsOnly: true,
+          }}
+          onAdLoaded={() => {
+            console.log('When an ad has finished loading');
+            /**
+             * When an ad has finished loading..
+             */
+          }}
+          onAdFailedToLoad={(err) => {
+            console.log(
+              'When an ad has failed to load. Callback contains an Error',
+              err,
+            );
+            /**
+             * The ad is now visible to the user.
+             */
+          }}
+          onAdOpened={() => {}}
+          onAdClosed={() => {}}
+          onAdLeftApplication={() => {}}
+        />
+      )}
+    </Box>
   );
 };
 
@@ -92,7 +98,7 @@ const Rewarded = () => {
 
   return (
     <Button
-      title="Show Rewarded Ad"
+      label="Show Rewarded Ad"
       onPress={() => {
         rewarded.show();
       }}

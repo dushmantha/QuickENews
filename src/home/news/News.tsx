@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -7,15 +7,14 @@ import {
   StatusBar,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Text, Box, useTheme, Size} from '../../components';
+import {Text, Box, useTheme, Size, CategoriesContext} from '../../components';
 import {HomeNavigationProps} from '../../components/Navigation';
 import {Images} from '../assets';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
-import {newsCategory} from '../../data/test/sampleData';
 import {News as NewsType} from '../../types';
 import {NavigationBar, NewsList} from '../components';
-import {useNewsGetByCategory, useBreakingNews} from '../../services/';
+import {useNewsGetByCategory, useBreakingNews} from '../../services';
 
 const BreakingNewsSection = ({navigation}: any) => {
   const renderItem = ({item, index}: any) => {
@@ -38,7 +37,7 @@ const BreakingNewsSection = ({navigation}: any) => {
           }>
           <FastImage
             source={{
-              uri: item.urlToImage,
+              uri: item.image.src,
               priority: FastImage.priority.normal,
             }}
             resizeMode="cover"
@@ -87,21 +86,23 @@ const BreakingNewsSection = ({navigation}: any) => {
 
 const News = ({navigation}: HomeNavigationProps<'News'>) => {
   const theme = useTheme();
-  const [selectedCategory, setSelectedCategory] = useState('business');
-
+  const [selectedCategory, setSelectedCategory] = useState('1');
+  let category = useContext(CategoriesContext).map(({title, id}) => {
+    return {title: title, id: id};
+  });
   const categoryHeaders = () => {
     const renderItem = ({item}: any) => {
       return (
         <TouchableOpacity
           style={{flex: 1, marginRight: Size.paddings.l}}
-          onPress={() => setSelectedCategory(item.tag)}>
-          {selectedCategory === item.tag ? (
+          onPress={() => setSelectedCategory(item.id)}>
+          {selectedCategory === item.id ? (
             <Text variant="title2" color="background2">
-              {item.name}
+              {item.title}
             </Text>
           ) : (
             <Text variant="title2" color="lightGray">
-              {item.name}
+              {item.title}
             </Text>
           )}
         </TouchableOpacity>
@@ -111,7 +112,7 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
     return (
       <Box flex={1} paddingLeft="l">
         <FlatList
-          data={newsCategory}
+          data={category}
           showsHorizontalScrollIndicator={false}
           renderItem={renderItem}
           keyExtractor={(_, index) => index.toString()}

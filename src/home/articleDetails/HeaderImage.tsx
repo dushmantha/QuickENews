@@ -24,7 +24,6 @@ interface HeaderImageProps {
 }
 
 export default ({y, news}: HeaderImageProps) => {
-  console.log('print -----', y);
   const height = interpolateNode(y, {
     inputRange: [-100, 0],
     outputRange: [HEADER_IMAGE_HEIGHT + 100, HEADER_IMAGE_HEIGHT],
@@ -37,7 +36,7 @@ export default ({y, news}: HeaderImageProps) => {
   });
   return (
     <Animated.Image
-      source={{uri: news.urlToImage}}
+      source={{uri: news.image && news.image.src}}
       style={[styles.image, {top, height}]}
     />
   );
