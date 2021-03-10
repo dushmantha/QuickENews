@@ -87,8 +87,8 @@ const BreakingNewsSection = ({navigation}: any) => {
 const News = ({navigation}: HomeNavigationProps<'News'>) => {
   const theme = useTheme();
   const [selectedCategory, setSelectedCategory] = useState('1');
-  let category = useContext(CategoriesContext).map(({title, id}) => {
-    return {title: title, id: id};
+  let category = useContext(CategoriesContext).map(({title, _id}) => {
+    return {title: title, id: _id};
   });
   const categoryHeaders = () => {
     const renderItem = ({item}: any) => {

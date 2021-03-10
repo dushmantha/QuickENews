@@ -26,7 +26,8 @@ const App = () => {
   LogBox.ignoreLogs(['Warning: ...']);
   const [initializing, setInitializing] = useState(true);
   const [currentUser, setCurrentUser] = useState();
-  const adsEnabled = remoteConfig().getValue('ads_enabled').asBoolean();
+  // const adsEnabled = remoteConfig().getValue('ads_enabled').asBoolean();
+  const adsEnabled = true;
   const onAuthStateChanged = (user: any) => {
     setCurrentUser(user);
     if (initializing) {
