@@ -3,9 +3,8 @@ import {StyleSheet} from 'react-native';
 import {Box} from '../../components';
 import Animated from 'react-native-reanimated';
 import MaskedView from '@react-native-community/masked-view';
-
-import Tabs from './Tabs';
-import {TabModel} from './Content';
+import Tab from './Tab';
+import {News} from '../../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,10 +17,10 @@ const styles = StyleSheet.create({
 
 interface TabHeaderProps {
   transition: Animated.Node<number>;
-  tabModel: TabModel;
+  news: News;
 }
 
-export default ({transition, tabModel}: TabHeaderProps) => {
+export default ({transition, news}: TabHeaderProps) => {
   const opacity = transition;
 
   const style = {
@@ -37,7 +36,7 @@ export default ({transition, tabModel}: TabHeaderProps) => {
         style={{
           ...StyleSheet.absoluteFillObject,
         }}>
-        <Tabs {...{tabModel}} />
+        <Tab {...{news}} />
       </Animated.View>
       <Box>
         <Animated.View style={[style]} />
@@ -48,7 +47,7 @@ export default ({transition, tabModel}: TabHeaderProps) => {
           style={{
             ...StyleSheet.absoluteFillObject,
           }}>
-          <Tabs {...{tabModel}} />
+          <Tab {...{news}} />
         </Animated.View>
       </MaskedView>
     </Animated.View>

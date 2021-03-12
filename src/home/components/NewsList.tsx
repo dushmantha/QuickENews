@@ -1,35 +1,37 @@
 import React from 'react';
-import {TouchableOpacity, Image, FlatList} from 'react-native';
+import {TouchableOpacity, FlatList} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
-import {Text, Box, useTheme} from '../../components';
-import {Images} from '../assets';
+import {Text, Box} from '../../components';
+import {News} from '../../types';
 
 type NewsListProps = {
-  news: any;
+  news: News[];
   navigation: any;
-  isBookmark: Boolean;
 };
 
-const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
-  const theme = useTheme();
-  const renderItem = ({item, index}: any) => {
+const NewsList = ({news, navigation}: NewsListProps) => {
+  const renderItem = ({item, index}: {item: News; index: number}) => {
     return (
       <Box alignItems="center">
         {(index + 1) % 4 === 0 && (
           <Box paddingVertical="m" alignItems="center">
-            <Banner bannerAdSize={BannerAdSize.LARGE_BANNER as any} />
+            <Banner bannerAdSize={BannerAdSize.MEDIUM_RECTANGLE as any} />
           </Box>
         )}
         <Box marginVertical="s" flex={1} flexDirection="row">
-          <Box flex={0.9}>
+          <Box flex={1}>
             <TouchableOpacity
               style={{flexDirection: 'row'}}
-              onPress={() => navigation.navigate('ArticleDetails')}>
+              onPress={() =>
+                navigation.navigate('ArticleDetails', {
+                  news: item,
+                })
+              }>
               <FastImage
                 source={{
-                  uri: item.urlToImage,
+                  uri: item.image && item.image.src,
                   priority: FastImage.priority.normal,
                 }}
                 resizeMode="cover"
@@ -38,39 +40,19 @@ const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
 
               <Box flex={1} marginLeft="m">
                 <Box paddingRight="l">
-                  <Text variant="title3" color="background2">
+                  <Text variant="title3" color="background2" numberOfLines={2}>
                     {item.title}
                   </Text>
-                  <Text variant="title3" color="lightGray" marginTop="s">
-                    {item.author}
-                  </Text>
+                  {item.author_name && (
+                    <Text variant="title3" color="lightGray" marginVertical="s">
+                      {item.author_name}
+                    </Text>
+                  )}
                 </Box>
-                <Box flexDirection="row" marginTop="s">
-                  <Text
-                    paddingRight="l"
-                    variant="body4"
-                    color="grayFont"
-                    numberOfLines={4}>
-                    {item.description}
-                  </Text>
+                <Box flexDirection="row">
+                  <Text numberOfLines={4}>{item.description}</Text>
                 </Box>
-
-                {/* Genre */}
               </Box>
-            </TouchableOpacity>
-          </Box>
-          {/* Bookmark Button */}
-          <Box flex={0.1}>
-            <TouchableOpacity onPress={() => console.log('Bookmark')}>
-              <Image
-                source={Images.bookmark}
-                resizeMode="contain"
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: theme.colors.background2,
-                }}
-              />
             </TouchableOpacity>
           </Box>
         </Box>
@@ -80,14 +62,9 @@ const NewsList = ({news, navigation, isBookmark}: NewsListProps) => {
 
   return (
     <Box flex={1} marginTop="m" marginHorizontal="m" paddingBottom="m">
-      {!isBookmark && (
-        <Box alignItems="center">
-          <Banner bannerAdSize={BannerAdSize.BANNER as any} />
-        </Box>
-      )}
       <FlatList
-        keyExtractor={(item) => item.key}
-        data={news.articles}
+        keyExtractor={(_, index) => index.toString()}
+        data={news}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />

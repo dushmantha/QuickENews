@@ -1,30 +1,36 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
-
+import {News} from '../../types';
 import {Text, Box} from '../../components';
-const profile = require('./assets/profile.jpg');
+import profileImage from './assets/profile.png';
 
 interface TabProps {
-  name?: string;
-  profile?: string;
+  news: News;
 }
 
-export default ({}: TabProps) => {
+export default ({news}: TabProps) => {
   return (
-    <Box
-      height={50}
-      paddingHorizontal="s"
-      justifyContent="center"
-      alignItems="center"
-      marginRight="s">
-      <Box flexDirection="row" alignItems="center">
-        <Animated.Image
-          source={profile}
-          style={{width: 60, height: 60, borderRadius: 30}}
-        />
-        <Text variant="title3" style={{marginStart: 16}}>
-          George Boyle
-        </Text>
+    <Box style={{...StyleSheet.absoluteFillObject}} flexDirection="row">
+      <Box
+        height={50}
+        paddingHorizontal="s"
+        justifyContent="center"
+        alignItems="center"
+        marginRight="s">
+        <Box flexDirection="row" alignItems="center">
+          <Animated.Image
+            source={
+              news.authorProfileImageUrl
+                ? {uri: news.authorProfileImageUrl}
+                : profileImage
+            }
+            style={{width: 50, height: 50, borderRadius: 30}}
+          />
+          <Text variant="title3" style={{marginStart: 16}}>
+            {news.authorName ? news.authorName : 'Anonymous'}
+          </Text>
+        </Box>
       </Box>
     </Box>
   );

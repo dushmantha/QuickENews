@@ -1,4 +1,4 @@
-export {default as LoadAssets} from './LoadAssets';
+export {default as LoadAssets, CategoriesContext} from './LoadAssets';
 export {default as Button} from './Button';
 export {Text, Box, useTheme, makeStyles, Size} from './Theme';
 export {default as Container} from './Container';

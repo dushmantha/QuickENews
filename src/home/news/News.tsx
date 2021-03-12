@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -7,29 +7,14 @@ import {
   StatusBar,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Text, Box, useTheme, Size} from '../../components';
+import {Text, Box, useTheme, Size, CategoriesContext} from '../../components';
 import {HomeNavigationProps} from '../../components/Navigation';
 import {Images} from '../assets';
 import {BannerAdSize} from '@react-native-firebase/admob';
 import {Banner} from '../../ads/';
-import {
-  allArticles,
-  businessArticle,
-  scienceAndTechArticle,
-  politicsArticle,
-  entertainment,
-  breakingNews,
-  newsCategory,
-} from '../../data/test/sampleData';
-
-const allNews = [
-  allArticles,
-  businessArticle,
-  scienceAndTechArticle,
-  politicsArticle,
-  entertainment,
-];
+import {News as NewsType} from '../../types';
 import {NavigationBar, NewsList} from '../components';
+import {useNewsGetByCategory, useBreakingNews} from '../../services';
 
 const BreakingNewsSection = ({navigation}: any) => {
   const renderItem = ({item, index}: any) => {
@@ -46,14 +31,13 @@ const BreakingNewsSection = ({navigation}: any) => {
             paddingHorizontal: Size.paddings.s,
           }}
           onPress={() =>
-            // navigation.navigate("ArticleDetails", {
-            //   news: item,
-            // })
-            navigation.navigate('ArticleDetails')
+            navigation.navigate('ArticleDetails', {
+              news: item,
+            })
           }>
           <FastImage
             source={{
-              uri: item.urlToImage,
+              uri: item.image.src,
               priority: FastImage.priority.normal,
             }}
             resizeMode="cover"
@@ -89,9 +73,9 @@ const BreakingNewsSection = ({navigation}: any) => {
       </Box>
       <Box flex={1} marginTop="l">
         <FlatList
-          data={breakingNews.articles}
+          keyExtractor={(_, index) => index.toString()}
+          data={useBreakingNews()}
           renderItem={renderItem}
-          keyExtractor={(item) => item.key}
           horizontal
           showsHorizontalScrollIndicator={false}
         />
@@ -102,22 +86,23 @@ const BreakingNewsSection = ({navigation}: any) => {
 
 const News = ({navigation}: HomeNavigationProps<'News'>) => {
   const theme = useTheme();
-  const [selectedCategory, setSelectedCategory] = useState(1);
-  const [categories, setCategories] = useState(newsCategory);
-
+  const [selectedCategory, setSelectedCategory] = useState('1');
+  let category = useContext(CategoriesContext).map(({title, _id}) => {
+    return {title: title, id: _id};
+  });
   const categoryHeaders = () => {
     const renderItem = ({item}: any) => {
       return (
         <TouchableOpacity
           style={{flex: 1, marginRight: Size.paddings.l}}
           onPress={() => setSelectedCategory(item.id)}>
-          {selectedCategory == item.id ? (
+          {selectedCategory === item.id ? (
             <Text variant="title2" color="background2">
-              {item.name}
+              {item.title}
             </Text>
           ) : (
             <Text variant="title2" color="lightGray">
-              {item.name}
+              {item.title}
             </Text>
           )}
         </TouchableOpacity>
@@ -127,10 +112,10 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
     return (
       <Box flex={1} paddingLeft="l">
         <FlatList
-          data={categories}
+          data={category}
           showsHorizontalScrollIndicator={false}
           renderItem={renderItem}
-          keyExtractor={(item) => `${item.id}`}
+          keyExtractor={(_, index) => index.toString()}
           horizontal
         />
       </Box>
@@ -171,8 +156,9 @@ const News = ({navigation}: HomeNavigationProps<'News'>) => {
           <Box>
             <NewsList
               navigation={navigation}
-              news={allNews[Math.floor(Math.random() * allNews.length)]}
-              isBookmark={false}
+              news={
+                useNewsGetByCategory(selectedCategory as string) as [NewsType]
+              }
             />
           </Box>
         </ScrollView>

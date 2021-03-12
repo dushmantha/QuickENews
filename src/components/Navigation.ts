@@ -1,12 +1,12 @@
 import {RouteProp, CompositeNavigationProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-
+import {DrawerNavigationProp} from '@react-navigation/drawer';
 export interface AuthNavigationProps<
   RouteName extends keyof AuthenticationRoutes
 > {
   navigation: CompositeNavigationProp<
     StackNavigationProp<AuthenticationRoutes, RouteName>,
-    StackNavigationProp<AppRoutes, 'News'>
+    DrawerNavigationProp<AppRoutes, 'News'>
   >;
   route: RouteProp<AuthenticationRoutes, RouteName>;
 }
@@ -32,5 +32,11 @@ export type HomeRoutes = {
   News: undefined;
   Setting: undefined;
   Bookmark: undefined;
-  ArticleDetails: undefined;
+  ArticleDetails: any;
+  PushNotification: undefined;
+  DisplaySetting: undefined;
+  DataUsage: undefined;
+  Autoplay: undefined;
+  About: undefined;
+  Support: undefined;
 };

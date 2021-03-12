@@ -1,15 +1,16 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {TextInput as RNTextInput} from 'react-native';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import auth from '@react-native-firebase/auth';
 import {CommonActions} from '@react-navigation/native';
-
-import {Container, Button, Text, Box} from '../components';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {Container, Button, Text, Box, useTheme} from '../components';
 import {AuthNavigationProps} from '../components/Navigation';
 import TextInput from '../components/Form/TextInput';
 import Footer from './components/Footer';
-
+import {setUser, getUser} from '../services';
+import {storeUser} from '../storage';
 const SignUpSchema = Yup.object().shape({
   password: Yup.string()
     .min(2, 'Too Short!')
@@ -22,6 +23,8 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const SignUp = ({navigation}: AuthNavigationProps<'SignUp'>) => {
+  const [spinner, setSpinner] = useState(false);
+  const theme = useTheme();
   const {handleChange, handleBlur, handleSubmit, errors, touched} = useFormik({
     validationSchema: SignUpSchema,
     initialValues: {
@@ -31,10 +34,13 @@ const SignUp = ({navigation}: AuthNavigationProps<'SignUp'>) => {
       remember: true,
     },
     onSubmit: (values) => {
+      setSpinner(true);
       auth()
         .createUserWithEmailAndPassword(values.email, values.password)
+        .then(({user}: any) => setUser(user))
+        .then(() => getUser(values.email))
         .then(() => {
-          console.log('User account created & signed in!');
+          setSpinner(false);
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
@@ -43,6 +49,7 @@ const SignUp = ({navigation}: AuthNavigationProps<'SignUp'>) => {
           );
         })
         .catch((error) => {
+          setSpinner(false);
           if (error.code === 'auth/email-already-in-use') {
             console.log('That email address is already in use!');
           }
@@ -127,6 +134,11 @@ const SignUp = ({navigation}: AuthNavigationProps<'SignUp'>) => {
           <Button onPress={handleSubmit} label="Create your account" />
         </Box>
       </Box>
+      <Spinner
+        visible={spinner}
+        textContent={'Loading...'}
+        textStyle={{color: theme.colors.background2}}
+      />
     </Container>
   );
 };

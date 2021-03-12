@@ -4,9 +4,10 @@ import Animated from 'react-native-reanimated';
 
 const {Extrapolate, interpolateNode} = Animated;
 const {height: wHeight, width: wWidth} = Dimensions.get('window');
+import {News} from '../../types';
+import placeHolder from './assets/place-holder.png';
 
-const backgroundImage = require('./assets/news-image.jpg');
-
+export const HEADER_IMAGE_WIDTH = wWidth;
 export const HEADER_IMAGE_HEIGHT = wHeight / 3;
 const styles = StyleSheet.create({
   image: {
@@ -20,9 +21,10 @@ const styles = StyleSheet.create({
 
 interface HeaderImageProps {
   y: Animated.Value<number>;
+  news: News;
 }
 
-export default ({y}: HeaderImageProps) => {
+export default ({y, news}: HeaderImageProps) => {
   const height = interpolateNode(y, {
     inputRange: [-100, 0],
     outputRange: [HEADER_IMAGE_HEIGHT + 100, HEADER_IMAGE_HEIGHT],
@@ -35,8 +37,9 @@ export default ({y}: HeaderImageProps) => {
   });
   return (
     <Animated.Image
-      source={backgroundImage}
+      source={{uri: news.image && news.image.src}}
       style={[styles.image, {top, height}]}
+      loadingIndicatorSource={placeHolder}
     />
   );
 };

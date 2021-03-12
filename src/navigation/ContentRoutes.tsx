@@ -1,13 +1,33 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {useTheme} from '../components';
 // import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 
-import {Setting, Bookmark, ArticleDetails} from '../home';
+import {
+  ArticleDetails,
+  Setting,
+  Bookmark,
+  About,
+  Questions,
+  AutoPlay,
+  DataUsage,
+  DisplaySetting,
+  PushNotification,
+} from '../home';
 import Tabs from './Tabs';
 
 const Stack = createStackNavigator();
 
 const ContentRoutes = () => {
+  const theme = useTheme();
+  const screenOption = {
+    headerShown: true,
+    headerBackTitleVisible: false,
+    headerTintColor: theme.colors.white,
+    headerStyle: {
+      backgroundColor: theme.colors.background2,
+    },
+  };
   return (
     <Stack.Navigator
       screenOptions={{
@@ -32,6 +52,32 @@ const ContentRoutes = () => {
         name="Setting"
         component={Setting}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PushNotification"
+        component={PushNotification}
+        options={screenOption}
+      />
+      <Stack.Screen
+        name="DisplaySetting"
+        component={DisplaySetting}
+        options={screenOption}
+      />
+      <Stack.Screen
+        name="DataUsage"
+        component={DataUsage}
+        options={screenOption}
+      />
+      <Stack.Screen
+        name="Autoplay"
+        component={AutoPlay}
+        options={screenOption}
+      />
+      <Stack.Screen name="About" component={About} options={screenOption} />
+      <Stack.Screen
+        name="Questions"
+        component={Questions}
+        options={screenOption}
       />
     </Stack.Navigator>
   );

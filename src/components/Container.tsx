@@ -43,6 +43,7 @@ const Container = ({children, footer}: ContainerProps) => {
           flexWrap="wrap"
           backgroundColor="background2"
           paddingVertical="m"
+          marginBottom="l"
           alignSelf="center">
           {footer}
           <Box height={insets.bottom} />

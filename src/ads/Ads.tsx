@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   BannerAd,
   FirebaseAdMobTypes,
   RewardedAd,
   RewardedAdEventType,
   TestIds,
+  AdsConsentStatus,
 } from '@react-native-firebase/admob';
-import {Platform, Button} from 'react-native';
-
+import {Platform} from 'react-native';
+import {Button, Box} from '../components';
+import {AdConsentContext, AdEnabledContext} from './';
 const adBannerUnitId = __DEV__
   ? TestIds.BANNER
   : Platform.OS === 'android'
@@ -20,39 +22,54 @@ const adRewardedUnitId = __DEV__
   ? 'ca-app-pub-7757836269117697/1169954122'
   : 'ca-app-pub-7757836269117697/3517464603';
 
-const rewarded = RewardedAd.createForAdRequest(adRewardedUnitId, {
-  requestNonPersonalizedAdsOnly: true,
-  keywords: ['fashion', 'clothing'],
-});
-
 const Banner = (size: {bannerAdSize: FirebaseAdMobTypes.BannerAdSize}) => {
+  const status = useContext(AdConsentContext);
+  const enabled = useContext(AdEnabledContext);
+  console.log('When an ad has finished loading', adRewardedUnitId);
   return (
-    <BannerAd
-      unitId={adBannerUnitId}
-      size={size.bannerAdSize}
-      // size={bannerAdSize.FULL_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-      onAdLoaded={() => {
-        /**
-         * When an ad has failed to load. Callback contains an Error.
-         */
-      }}
-      onAdFailedToLoad={() => {
-        /**
-         * The ad is now visible to the user.
-         */
-      }}
-      onAdOpened={() => {}}
-      onAdClosed={() => {}}
-      onAdLeftApplication={() => {}}
-    />
+    <Box>
+      {enabled && (
+        <BannerAd
+          unitId={adBannerUnitId}
+          size={size.bannerAdSize}
+          // size={bannerAdSize.FULL_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly:
+              status === AdsConsentStatus.NON_PERSONALIZED,
+            // requestNonPersonalizedAdsOnly: true,
+          }}
+          onAdLoaded={() => {
+            console.log('When an ad has finished loading');
+            /**
+             * When an ad has finished loading..
+             */
+          }}
+          onAdFailedToLoad={(err) => {
+            console.log(
+              'When an ad has failed to load. Callback contains an Error',
+              err,
+            );
+            /**
+             * The ad is now visible to the user.
+             */
+          }}
+          onAdOpened={() => {}}
+          onAdClosed={() => {}}
+          onAdLeftApplication={() => {}}
+        />
+      )}
+    </Box>
   );
 };
 
 const Rewarded = () => {
   const [loaded, setLoaded] = useState(false);
+  const status = useContext(AdConsentContext);
+  const rewarded = RewardedAd.createForAdRequest(adRewardedUnitId, {
+    requestNonPersonalizedAdsOnly: status === AdsConsentStatus.NON_PERSONALIZED,
+    // requestNonPersonalizedAdsOnly: true,
+    keywords: ['fashion', 'clothing'],
+  });
 
   useEffect(() => {
     const eventListener = rewarded.onAdEvent((type, error, reward) => {
@@ -72,7 +89,7 @@ const Rewarded = () => {
     return () => {
       eventListener();
     };
-  }, []);
+  });
 
   // No advert ready to show yet
   if (!loaded) {
@@ -81,7 +98,7 @@ const Rewarded = () => {
 
   return (
     <Button
-      title="Show Rewarded Ad"
+      label="Show Rewarded Ad"
       onPress={() => {
         rewarded.show();
       }}

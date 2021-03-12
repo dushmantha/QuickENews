@@ -1,7 +1,6 @@
 import React, {forwardRef} from 'react';
 import {
   TextInput as RNTextInput,
-  StyleSheet,
   TextInputProps as RNTextInputProps,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -11,7 +10,7 @@ import RoundedIcon from '../RoundedIcon';
 import {Text} from '../Theme';
 
 interface TextInputProps extends RNTextInputProps {
-  icon: string;
+  icon?: string;
   touched?: boolean;
   error?: string;
 }

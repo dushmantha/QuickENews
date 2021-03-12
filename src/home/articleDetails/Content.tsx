@@ -1,18 +1,18 @@
 /* eslint-disable max-len */
 import React from 'react';
-import {StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {StyleSheet, SafeAreaView, useWindowDimensions} from 'react-native';
 import Animated, {Extrapolate, interpolateNode} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
 import {BannerAdSize} from '@react-native-firebase/admob';
+import HTML from 'react-native-render-html';
 import {Banner} from '../../ads/';
-
-import {Text, Box, useTheme, Size} from '../../components';
+import {Text, Box, useTheme} from '../../components';
+import {News} from '../../types';
 import {NavigationBar, NewsList} from '../components';
-import {allArticles} from '../../data/test/sampleData';
+import {useNewsGetByCategory} from '../../services';
 import {HEADER_IMAGE_HEIGHT} from './HeaderImage';
 import {MIN_HEADER_HEIGHT} from './Header';
-
-const profile = require('./assets/profile.jpg');
+import profileImage from './assets/profile.png';
 
 export interface TabModel {
   name: string;
@@ -22,12 +22,13 @@ export interface TabModel {
 
 interface ContentProps {
   y: Animated.Node<number>;
-  onMeasurement: (index: number, tab: TabModel) => void;
   navigation: any;
+  news: News;
 }
 
-export default ({y, navigation}: ContentProps) => {
+export default ({y, navigation, news}: ContentProps) => {
   const theme = useTheme();
+  const contentWidth = useWindowDimensions().width;
   const opacity = interpolateNode(y, {
     inputRange: [
       HEADER_IMAGE_HEIGHT - MIN_HEADER_HEIGHT,
@@ -42,63 +43,76 @@ export default ({y, navigation}: ContentProps) => {
       <Animated.View style={[styles.section, {opacity}]}>
         <Box flexDirection="row" alignItems="center">
           <Animated.Image
-            source={profile}
-            style={{width: 60, height: 60, borderRadius: 30}}
+            source={
+              news.authorProfileImageUrl
+                ? {uri: news.authorProfileImageUrl}
+                : profileImage
+            }
+            style={{width: 50, height: 50, borderRadius: 30}}
           />
-          <Text marginStart="m" variant="title3" color="background2">
-            George Boyle
-          </Text>
-        </Box>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginTop="s">
-          <Text variant="body" color="background2">
-            Attached pdf here
-          </Text>
-          <Box flexDirection="row" alignItems="center">
-            <Icon
-              name="paperclip"
-              color={theme.colors.background2}
-              size={20}
-              style={styles.icon}
-            />
+          <Box marginLeft="m" flex={1}>
+            <Text variant="title3" color="background2">
+              {news.author_name}
+            </Text>
           </Box>
         </Box>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginTop="s">
-          <Text variant="body2" color="background2">
-            @twitter
-          </Text>
-        </Box>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginTop="s">
-          <Text variant="body2" color="background2">
-            george@gmail.com
-          </Text>
-        </Box>
+        {news.attachment && (
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s">
+            <Text variant="body" color="background2">
+              {news.attachment}
+            </Text>
+            <Box flexDirection="row" alignItems="center">
+              <Icon
+                name="paperclip"
+                color={theme.colors.background2}
+                size={20}
+                style={styles.icon}
+              />
+            </Box>
+          </Box>
+        )}
+        {news.author_twitter && (
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s">
+            <Text variant="body2" color="background2">
+              {news.author_twitter}
+            </Text>
+          </Box>
+        )}
+        {news.author_emails && (
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="center"
+            marginTop="s">
+            <Text variant="body2" color="background2">
+              {news.author_emails}
+            </Text>
+          </Box>
+        )}
       </Animated.View>
-      <Text marginBottom="l" marginHorizontal="m" variant="body">
-        {allArticles.articles[0].description}
-      </Text>
+      <Box marginBottom="l" marginHorizontal="m">
+        <HTML source={{html: news.description}} contentWidth={contentWidth} />
+      </Box>
+
       <Box paddingVertical="m" alignItems="center">
         <Banner bannerAdSize={BannerAdSize.MEDIUM_RECTANGLE as any} />
       </Box>
       <Box marginVertical="l">
-        <RecommendedNews navigation={navigation} />
+        <RecommendedNews navigation={navigation} news={news} />
       </Box>
     </Box>
   );
 };
 
-const RecommendedNews = ({navigation}: {navigation: any}) => {
+const RecommendedNews = ({navigation, news}: {navigation: any; news: News}) => {
   const theme = useTheme();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.colors.background}}>
@@ -106,23 +120,12 @@ const RecommendedNews = ({navigation}: {navigation: any}) => {
         <Box height={70}>
           <NavigationBar title="Recommended News" />
         </Box>
-        {/* body section */}
-        <ScrollView
-          style={{
-            paddingVertical: Size.paddings.l,
-            backgroundColor: theme.colors.background,
-            flex: 1,
-          }}
-          showsVerticalScrollIndicator={false}>
-          {/* News list Section */}
-          <Box>
-            <NewsList
-              navigation={navigation}
-              news={allArticles}
-              isBookmark={false}
-            />
-          </Box>
-        </ScrollView>
+        <Box>
+          <NewsList
+            navigation={navigation}
+            news={useNewsGetByCategory(news.category_id) as [News]}
+          />
+        </Box>
       </Box>
     </SafeAreaView>
   );

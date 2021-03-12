@@ -103,6 +103,7 @@ const theme = {
     white: palette.white,
     grayFont: palette.gray,
     lightGray: palette.lightGray,
+    lightRd: palette.lightRed,
   },
   spacing: {
     s: 8,
