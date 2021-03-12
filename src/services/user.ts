@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import {storeUser, getUserFromStorage} from '../storage';
+import {storeUser} from '../storage';
 import {User} from '../types';
 
 const setUser = (user: any) => {

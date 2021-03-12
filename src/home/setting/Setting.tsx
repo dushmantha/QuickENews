@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
+  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {CommonActions} from '@react-navigation/native';
+import {PricingCard} from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Text, Box, useTheme, Size} from '../../components';
 import {HomeNavigationProps} from '../../components/Navigation';
@@ -21,35 +23,72 @@ const HeaderView = (navigation: any) => {
   const [spinner, setSpinner] = useState(false);
   const user = auth().currentUser;
   const theme = useTheme();
+
+  const subscribeData = [
+    {
+      color: theme.colors.background2,
+      title: 'Free',
+      price: '$0',
+      info: ['1 User', 'Demo', 'Basic Test Features'],
+      button: {title: 'GET STARTED', icon: 'flight-takeoff'},
+    },
+    {
+      color: theme.colors.background2,
+      title: 'Basic',
+      price: '$59',
+      info: ['10 User', 'Basic Support', 'All Core Features'],
+      button: {title: 'GET STARTED', icon: 'flight-takeoff'},
+    },
+    {
+      color: theme.colors.background2,
+      title: 'Premium',
+      price: '$129',
+      info: ['25 User', 'Basic Support', 'All Core Features'],
+      button: {title: 'GET STARTED', icon: 'flight-takeoff'},
+    },
+  ];
+
+  const renderItem = ({item}: any) => {
+    return (
+      <Box alignItems="center" flexDirection="row">
+        <PricingCard
+          color={item.color}
+          title={item.title}
+          price={item.price}
+          info={item.info}
+          button={item.button}
+        />
+      </Box>
+    );
+  };
+
   return (
     <Box flex={1} justifyContent="flex-start" marginVertical="m">
       <Text variant="title1" color="white" textAlign="center" paddingBottom="l">
         Account Details
       </Text>
-      <Box width={width - 80} alignSelf="center">
+      <Box width={width} alignSelf="center">
         <Box
           flexDirection="row"
           height={50}
-          width={width - 80}
+          width={width}
           borderRadius="s"
           alignSelf="center"
           alignItems="center"
-          paddingHorizontal="s">
+          paddingHorizontal="m">
           <Icon name="mail" size={25} color={theme.colors.white} />
           <Text variant="body2" paddingStart="s" color="white">
             {user && user.email}
           </Text>
         </Box>
-        <Box
-          borderRadius="m"
-          height={60}
-          paddingStart="s"
-          justifyContent="center">
-          <TouchableOpacity onPress={() => {}}>
-            <Text variant="title2" textAlign="left" color="white">
-              Subscribe
-            </Text>
-          </TouchableOpacity>
+        <Box flex={1} marginTop="l">
+          <FlatList
+            keyExtractor={(_, index) => index.toString()}
+            data={subscribeData}
+            renderItem={renderItem}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
         </Box>
         <Box
           borderRadius="m"

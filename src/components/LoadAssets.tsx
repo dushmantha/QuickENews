@@ -8,7 +8,7 @@ interface LoadAssetsProps {
 
 const contextDefaultValues: Category = {
   title: 'Breaking News',
-  id: '11',
+  _id: '11',
 };
 
 const CategoriesContext = createContext<[Category]>([contextDefaultValues]);

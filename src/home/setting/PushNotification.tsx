@@ -1,21 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {Dimensions, Switch, SectionList, BackHandler} from 'react-native';
 import {Text, Box, useTheme} from '../../components';
-
 const {width} = Dimensions.get('window');
 import {getUserFromStorage} from '../../storage';
-import {User} from '../../types';
 
 const PushNotification = () => {
   const theme = useTheme();
-  const [value, setValue] = useState<User>();
-  const readItemFromStorage = async () => {
-    const item = await getUserFromStorage();
-    item;
-  };
-  useEffect(() => {
-    readItemFromStorage();
-  }, []);
 
   const [breakingNews, setBreakingNews] = useState(async () => {
     const item = await getUserFromStorage();

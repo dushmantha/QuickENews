@@ -5,6 +5,7 @@ import Animated from 'react-native-reanimated';
 const {Extrapolate, interpolateNode} = Animated;
 const {height: wHeight, width: wWidth} = Dimensions.get('window');
 import {News} from '../../types';
+import placeHolder from './assets/place-holder.png';
 
 export const HEADER_IMAGE_WIDTH = wWidth;
 export const HEADER_IMAGE_HEIGHT = wHeight / 3;
@@ -38,6 +39,7 @@ export default ({y, news}: HeaderImageProps) => {
     <Animated.Image
       source={{uri: news.image && news.image.src}}
       style={[styles.image, {top, height}]}
+      loadingIndicatorSource={placeHolder}
     />
   );
 };
